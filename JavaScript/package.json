@@ -1,0 +1,8 @@
+{
+  "type": "module",
+  "main": "src/interpret.js",
+  "dependencies": {
+    "antlr4": "^4.12.0"
+  },
+  "scripts": { "interpret": "node src/interpret.js" }
+}
