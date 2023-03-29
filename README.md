@@ -1,59 +1,24 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-8d59dc4de5201274e310e4c54b9627a8934c3b88527886e3b421487c677d23eb.svg)](https://classroom.github.com/a/7BDHtAiP)
-# stella-implementation-assignment
-Template for an assignment of implementing Stella programming language.
+# stella-implementation-in-kotlin
+Template for an implementation of Stella in Kotlin.
 
-[Documentation](doc/) for this language and its syntax structure can be found in the corresponding folder.
+## How to pass tests
+They are added in folder `src/test/resources/...`. They are added as the default tests, so you just need to start org.stellasql.stella.MainKt and the tests will be run.
+For build just use `./gradlew build`. The main additions for now are in TypeChecker.kt and Output.kt
 
-This template contains skeleton implementations for an interpreter of Stella implemented in several languages:
-* [C++](C++/)
-* [Java](Java/)
-* [JavaScript](JavaScript/)
-* [OCaml](OCaml/)
-* [Python](Python/)
-
-Your task is to select any of these languages and complete it, making the tests pass. Alternatively, you may implement a new interpreter in any language of your choice from scratch, if you wish.
+## Some notes
+For now this program throws an exception if the type checker fails. This is not the desired behaviour, but the tester class was written in a way that it expects an exception to be thrown. Hope this will be changed in the future.
 
 
-### Building and running the interpreter
+This typechecker checks the following nodes:
 
-**Note:** this was tested with BNFC 2.9.4.1 - (2.9.4 and lower versions are not suitable!).
-The requirements for specific implementations are in the corresponding directories (if any).
+    AProgram
+    DeclFun (only function name, one parameter, return type, and return expression)
+    TypeBool, TypeNat, and TypeFun
+    boolean expressions: ConstTrue, ConstFalse, If
+    anonymous functions: Abstraction
+    function application: Application
+    natural number expressions: ConstInt(0), Succ, Pred, NatRec
+    variables: Var
 
-1. Change the first line in the [Makefile](Makefile) to match the language of your choice.
 
-2. To build the interpreter run:
-
-```sh
-make
-```
-
-This typically involves running BNFC converter, and compiling the project in the chosen language,
-resulting in an executable `${LANGUAGE}/stella-interpreter` that you can now use to type check and interpret programs.
-
-3. Now, to run the type checker:
-
-```sh
-make typecheck
-```
-
-This starts the type checker waiting to input the program. Note that it will accept input until it encounters the end of file (Ctrl+D).
-
-4. To run the interpreter:
-
-```sh
-make interpret <filename>
-```
-
-This starts the interpreter reading the program from the input file and waiting for the input of the argument for the _main_ function.
-
-### Generating the PDF with syntax description
-
-Run BNF converter with `--latex` option and use `pdflatex` or `latexmk` to compile a PDF.
-Assuming you have `latexmk` and `pdflatex` installed, you can simply run
-
-```sh
-make syntax-pdf
-```
-
-This will generate PDF file `doc/Stella.pdf` and `/doc/Stella.tex` from a `Stella.cf` file.
-
+![Screenshot from Intellij IDEA.](images/idea-demo.png)
