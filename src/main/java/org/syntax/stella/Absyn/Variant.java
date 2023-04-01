@@ -8,12 +8,12 @@ public class Variant  extends Expr {
   public int line_num, col_num, offset;
   public Variant(String p1, ExprData p2) { stellaident_ = p1; exprdata_ = p2; }
 
-  public <R,A> R accept(Visitor<R,A> v, A arg) { return v.visit(this, arg); }
+  public <R,A> R accept(org.syntax.stella.Absyn.Expr.Visitor<R,A> v, A arg) { return v.visit(this, arg); }
 
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) return true;
-    if (o instanceof Variant) {
-      Variant x = (Variant)o;
+    if (o instanceof org.syntax.stella.Absyn.Variant) {
+      org.syntax.stella.Absyn.Variant x = (org.syntax.stella.Absyn.Variant)o;
       return this.stellaident_.equals(x.stellaident_) && this.exprdata_.equals(x.exprdata_);
     }
     return false;

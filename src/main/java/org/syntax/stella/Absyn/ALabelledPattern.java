@@ -8,12 +8,12 @@ public class ALabelledPattern  extends LabelledPattern {
   public int line_num, col_num, offset;
   public ALabelledPattern(String p1, Pattern p2) { stellaident_ = p1; pattern_ = p2; }
 
-  public <R,A> R accept(Visitor<R,A> v, A arg) { return v.visit(this, arg); }
+  public <R,A> R accept(org.syntax.stella.Absyn.LabelledPattern.Visitor<R,A> v, A arg) { return v.visit(this, arg); }
 
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) return true;
-    if (o instanceof ALabelledPattern) {
-      ALabelledPattern x = (ALabelledPattern)o;
+    if (o instanceof org.syntax.stella.Absyn.ALabelledPattern) {
+      org.syntax.stella.Absyn.ALabelledPattern x = (org.syntax.stella.Absyn.ALabelledPattern)o;
       return this.stellaident_.equals(x.stellaident_) && this.pattern_.equals(x.pattern_);
     }
     return false;

@@ -3,9 +3,9 @@
 package org.syntax.stella.Absyn;
 
 public abstract class VariantFieldType implements java.io.Serializable {
-  public abstract <R,A> R accept(Visitor<R,A> v, A arg);
+  public abstract <R,A> R accept(VariantFieldType.Visitor<R,A> v, A arg);
   public interface Visitor <R,A> {
-    public R visit(AVariantFieldType p, A arg);
+    public R visit(org.syntax.stella.Absyn.AVariantFieldType p, A arg);
 
   }
 

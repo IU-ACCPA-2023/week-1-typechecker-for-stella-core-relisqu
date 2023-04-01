@@ -3,10 +3,10 @@
 package org.syntax.stella.Absyn;
 
 public abstract class ThrowType implements java.io.Serializable {
-  public abstract <R,A> R accept(Visitor<R,A> v, A arg);
+  public abstract <R,A> R accept(ThrowType.Visitor<R,A> v, A arg);
   public interface Visitor <R,A> {
-    public R visit(NoThrowType p, A arg);
-    public R visit(SomeThrowType p, A arg);
+    public R visit(org.syntax.stella.Absyn.NoThrowType p, A arg);
+    public R visit(org.syntax.stella.Absyn.SomeThrowType p, A arg);
 
   }
 

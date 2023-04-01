@@ -13,12 +13,12 @@ public class DeclFun  extends Decl {
   public int line_num, col_num, offset;
   public DeclFun(ListAnnotation p1, String p2, ListParamDecl p3, ReturnType p4, ThrowType p5, ListDecl p6, Expr p7) { listannotation_ = p1; stellaident_ = p2; listparamdecl_ = p3; returntype_ = p4; throwtype_ = p5; listdecl_ = p6; expr_ = p7; }
 
-  public <R,A> R accept(Visitor<R,A> v, A arg) { return v.visit(this, arg); }
+  public <R,A> R accept(org.syntax.stella.Absyn.Decl.Visitor<R,A> v, A arg) { return v.visit(this, arg); }
 
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) return true;
-    if (o instanceof DeclFun) {
-      DeclFun x = (DeclFun)o;
+    if (o instanceof org.syntax.stella.Absyn.DeclFun) {
+      org.syntax.stella.Absyn.DeclFun x = (org.syntax.stella.Absyn.DeclFun)o;
       return this.listannotation_.equals(x.listannotation_) && this.stellaident_.equals(x.stellaident_) && this.listparamdecl_.equals(x.listparamdecl_) && this.returntype_.equals(x.returntype_) && this.throwtype_.equals(x.throwtype_) && this.listdecl_.equals(x.listdecl_) && this.expr_.equals(x.expr_);
     }
     return false;

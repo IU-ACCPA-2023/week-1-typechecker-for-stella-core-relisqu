@@ -7,12 +7,12 @@ public class TypeRecord  extends Type {
   public int line_num, col_num, offset;
   public TypeRecord(ListRecordFieldType p1) { listrecordfieldtype_ = p1; }
 
-  public <R,A> R accept(Visitor<R,A> v, A arg) { return v.visit(this, arg); }
+  public <R,A> R accept(org.syntax.stella.Absyn.Type.Visitor<R,A> v, A arg) { return v.visit(this, arg); }
 
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) return true;
-    if (o instanceof TypeRecord) {
-      TypeRecord x = (TypeRecord)o;
+    if (o instanceof org.syntax.stella.Absyn.TypeRecord) {
+      org.syntax.stella.Absyn.TypeRecord x = (org.syntax.stella.Absyn.TypeRecord)o;
       return this.listrecordfieldtype_.equals(x.listrecordfieldtype_);
     }
     return false;

@@ -7,12 +7,12 @@ public class PatternTuple  extends Pattern {
   public int line_num, col_num, offset;
   public PatternTuple(ListPattern p1) { listpattern_ = p1; }
 
-  public <R,A> R accept(Visitor<R,A> v, A arg) { return v.visit(this, arg); }
+  public <R,A> R accept(org.syntax.stella.Absyn.Pattern.Visitor<R,A> v, A arg) { return v.visit(this, arg); }
 
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) return true;
-    if (o instanceof PatternTuple) {
-      PatternTuple x = (PatternTuple)o;
+    if (o instanceof org.syntax.stella.Absyn.PatternTuple) {
+      org.syntax.stella.Absyn.PatternTuple x = (org.syntax.stella.Absyn.PatternTuple)o;
       return this.listpattern_.equals(x.listpattern_);
     }
     return false;

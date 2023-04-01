@@ -3,9 +3,9 @@
 package org.syntax.stella.Absyn;
 
 public abstract class LanguageDecl implements java.io.Serializable {
-  public abstract <R,A> R accept(Visitor<R,A> v, A arg);
+  public abstract <R,A> R accept(LanguageDecl.Visitor<R,A> v, A arg);
   public interface Visitor <R,A> {
-    public R visit(LanguageCore p, A arg);
+    public R visit(org.syntax.stella.Absyn.LanguageCore p, A arg);
 
   }
 

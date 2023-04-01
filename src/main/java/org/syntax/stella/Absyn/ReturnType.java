@@ -3,10 +3,10 @@
 package org.syntax.stella.Absyn;
 
 public abstract class ReturnType implements java.io.Serializable {
-  public abstract <R,A> R accept(Visitor<R,A> v, A arg);
+  public abstract <R,A> R accept(ReturnType.Visitor<R,A> v, A arg);
   public interface Visitor <R,A> {
-    public R visit(NoReturnType p, A arg);
-    public R visit(SomeReturnType p, A arg);
+    public R visit(org.syntax.stella.Absyn.NoReturnType p, A arg);
+    public R visit(org.syntax.stella.Absyn.SomeReturnType p, A arg);
 
   }
 

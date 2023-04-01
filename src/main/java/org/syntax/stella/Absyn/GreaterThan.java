@@ -7,12 +7,12 @@ public class GreaterThan  extends Expr {
   public int line_num, col_num, offset;
   public GreaterThan(Expr p1, Expr p2) { expr_1 = p1; expr_2 = p2; }
 
-  public <R,A> R accept(Visitor<R,A> v, A arg) { return v.visit(this, arg); }
+  public <R,A> R accept(org.syntax.stella.Absyn.Expr.Visitor<R,A> v, A arg) { return v.visit(this, arg); }
 
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) return true;
-    if (o instanceof GreaterThan) {
-      GreaterThan x = (GreaterThan)o;
+    if (o instanceof org.syntax.stella.Absyn.GreaterThan) {
+      org.syntax.stella.Absyn.GreaterThan x = (org.syntax.stella.Absyn.GreaterThan)o;
       return this.expr_1.equals(x.expr_1) && this.expr_2.equals(x.expr_2);
     }
     return false;

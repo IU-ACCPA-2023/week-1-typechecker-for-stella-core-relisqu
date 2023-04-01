@@ -7,12 +7,12 @@ public class SomeReturnType  extends ReturnType {
   public int line_num, col_num, offset;
   public SomeReturnType(Type p1) { type_ = p1; }
 
-  public <R,A> R accept(Visitor<R,A> v, A arg) { return v.visit(this, arg); }
+  public <R,A> R accept(org.syntax.stella.Absyn.ReturnType.Visitor<R,A> v, A arg) { return v.visit(this, arg); }
 
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) return true;
-    if (o instanceof SomeReturnType) {
-      SomeReturnType x = (SomeReturnType)o;
+    if (o instanceof org.syntax.stella.Absyn.SomeReturnType) {
+      org.syntax.stella.Absyn.SomeReturnType x = (org.syntax.stella.Absyn.SomeReturnType)o;
       return this.type_.equals(x.type_);
     }
     return false;

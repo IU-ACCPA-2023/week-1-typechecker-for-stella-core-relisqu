@@ -7,12 +7,12 @@ public class PatternList  extends Pattern {
   public int line_num, col_num, offset;
   public PatternList(ListPattern p1) { listpattern_ = p1; }
 
-  public <R,A> R accept(Visitor<R,A> v, A arg) { return v.visit(this, arg); }
+  public <R,A> R accept(org.syntax.stella.Absyn.Pattern.Visitor<R,A> v, A arg) { return v.visit(this, arg); }
 
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) return true;
-    if (o instanceof PatternList) {
-      PatternList x = (PatternList)o;
+    if (o instanceof org.syntax.stella.Absyn.PatternList) {
+      org.syntax.stella.Absyn.PatternList x = (org.syntax.stella.Absyn.PatternList)o;
       return this.listpattern_.equals(x.listpattern_);
     }
     return false;

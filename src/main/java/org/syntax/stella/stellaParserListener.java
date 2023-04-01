@@ -8,16 +8,6 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface stellaParserListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link stellaParser#start_Program}.
-	 * @param ctx the parse tree
-	 */
-	void enterStart_Program(stellaParser.Start_ProgramContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link stellaParser#start_Program}.
-	 * @param ctx the parse tree
-	 */
-	void exitStart_Program(stellaParser.Start_ProgramContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link stellaParser#start_ListStellaIdent}.
 	 * @param ctx the parse tree
 	 */
@@ -27,6 +17,16 @@ public interface stellaParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStart_ListStellaIdent(stellaParser.Start_ListStellaIdentContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link stellaParser#start_Program}.
+	 * @param ctx the parse tree
+	 */
+	void enterStart_Program(stellaParser.Start_ProgramContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link stellaParser#start_Program}.
+	 * @param ctx the parse tree
+	 */
+	void exitStart_Program(stellaParser.Start_ProgramContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link stellaParser#start_LanguageDecl}.
 	 * @param ctx the parse tree
@@ -168,25 +168,25 @@ public interface stellaParserListener extends ParseTreeListener {
 	 */
 	void exitStart_ThrowType(stellaParser.Start_ThrowTypeContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link stellaParser#start_Expr}.
+	 * Enter a parse tree produced by {@link stellaParser#start_Type9}.
 	 * @param ctx the parse tree
 	 */
-	void enterStart_Expr(stellaParser.Start_ExprContext ctx);
+	void enterStart_Type9(stellaParser.Start_Type9Context ctx);
 	/**
-	 * Exit a parse tree produced by {@link stellaParser#start_Expr}.
+	 * Exit a parse tree produced by {@link stellaParser#start_Type9}.
 	 * @param ctx the parse tree
 	 */
-	void exitStart_Expr(stellaParser.Start_ExprContext ctx);
+	void exitStart_Type9(stellaParser.Start_Type9Context ctx);
 	/**
-	 * Enter a parse tree produced by {@link stellaParser#start_ListExpr}.
+	 * Enter a parse tree produced by {@link stellaParser#start_ListType9}.
 	 * @param ctx the parse tree
 	 */
-	void enterStart_ListExpr(stellaParser.Start_ListExprContext ctx);
+	void enterStart_ListType9(stellaParser.Start_ListType9Context ctx);
 	/**
-	 * Exit a parse tree produced by {@link stellaParser#start_ListExpr}.
+	 * Exit a parse tree produced by {@link stellaParser#start_ListType9}.
 	 * @param ctx the parse tree
 	 */
-	void exitStart_ListExpr(stellaParser.Start_ListExprContext ctx);
+	void exitStart_ListType9(stellaParser.Start_ListType9Context ctx);
 	/**
 	 * Enter a parse tree produced by {@link stellaParser#start_MatchCase}.
 	 * @param ctx the parse tree
@@ -298,6 +298,26 @@ public interface stellaParserListener extends ParseTreeListener {
 	 */
 	void exitStart_ListBinding(stellaParser.Start_ListBindingContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link stellaParser#start_Expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterStart_Expr(stellaParser.Start_ExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link stellaParser#start_Expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitStart_Expr(stellaParser.Start_ExprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link stellaParser#start_ListExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterStart_ListExpr(stellaParser.Start_ListExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link stellaParser#start_ListExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitStart_ListExpr(stellaParser.Start_ListExprContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link stellaParser#start_Expr1}.
 	 * @param ctx the parse tree
 	 */
@@ -308,6 +328,26 @@ public interface stellaParserListener extends ParseTreeListener {
 	 */
 	void exitStart_Expr1(stellaParser.Start_Expr1Context ctx);
 	/**
+	 * Enter a parse tree produced by {@link stellaParser#start_PatternBinding}.
+	 * @param ctx the parse tree
+	 */
+	void enterStart_PatternBinding(stellaParser.Start_PatternBindingContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link stellaParser#start_PatternBinding}.
+	 * @param ctx the parse tree
+	 */
+	void exitStart_PatternBinding(stellaParser.Start_PatternBindingContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link stellaParser#start_ListPatternBinding}.
+	 * @param ctx the parse tree
+	 */
+	void enterStart_ListPatternBinding(stellaParser.Start_ListPatternBindingContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link stellaParser#start_ListPatternBinding}.
+	 * @param ctx the parse tree
+	 */
+	void exitStart_ListPatternBinding(stellaParser.Start_ListPatternBindingContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link stellaParser#start_Expr2}.
 	 * @param ctx the parse tree
 	 */
@@ -317,6 +357,16 @@ public interface stellaParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStart_Expr2(stellaParser.Start_Expr2Context ctx);
+	/**
+	 * Enter a parse tree produced by {@link stellaParser#start_ListExpr2}.
+	 * @param ctx the parse tree
+	 */
+	void enterStart_ListExpr2(stellaParser.Start_ListExpr2Context ctx);
+	/**
+	 * Exit a parse tree produced by {@link stellaParser#start_ListExpr2}.
+	 * @param ctx the parse tree
+	 */
+	void exitStart_ListExpr2(stellaParser.Start_ListExpr2Context ctx);
 	/**
 	 * Enter a parse tree produced by {@link stellaParser#start_Expr3}.
 	 * @param ctx the parse tree
@@ -338,16 +388,6 @@ public interface stellaParserListener extends ParseTreeListener {
 	 */
 	void exitStart_Expr4(stellaParser.Start_Expr4Context ctx);
 	/**
-	 * Enter a parse tree produced by {@link stellaParser#start_Expr5}.
-	 * @param ctx the parse tree
-	 */
-	void enterStart_Expr5(stellaParser.Start_Expr5Context ctx);
-	/**
-	 * Exit a parse tree produced by {@link stellaParser#start_Expr5}.
-	 * @param ctx the parse tree
-	 */
-	void exitStart_Expr5(stellaParser.Start_Expr5Context ctx);
-	/**
 	 * Enter a parse tree produced by {@link stellaParser#start_Expr6}.
 	 * @param ctx the parse tree
 	 */
@@ -357,6 +397,16 @@ public interface stellaParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStart_Expr6(stellaParser.Start_Expr6Context ctx);
+	/**
+	 * Enter a parse tree produced by {@link stellaParser#start_Expr7}.
+	 * @param ctx the parse tree
+	 */
+	void enterStart_Expr7(stellaParser.Start_Expr7Context ctx);
+	/**
+	 * Exit a parse tree produced by {@link stellaParser#start_Expr7}.
+	 * @param ctx the parse tree
+	 */
+	void exitStart_Expr7(stellaParser.Start_Expr7Context ctx);
 	/**
 	 * Enter a parse tree produced by {@link stellaParser#start_Type}.
 	 * @param ctx the parse tree
@@ -408,6 +458,16 @@ public interface stellaParserListener extends ParseTreeListener {
 	 */
 	void exitStart_ListType(stellaParser.Start_ListTypeContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link stellaParser#start_Expr5}.
+	 * @param ctx the parse tree
+	 */
+	void enterStart_Expr5(stellaParser.Start_Expr5Context ctx);
+	/**
+	 * Exit a parse tree produced by {@link stellaParser#start_Expr5}.
+	 * @param ctx the parse tree
+	 */
+	void exitStart_Expr5(stellaParser.Start_Expr5Context ctx);
+	/**
 	 * Enter a parse tree produced by {@link stellaParser#start_VariantFieldType}.
 	 * @param ctx the parse tree
 	 */
@@ -458,16 +518,6 @@ public interface stellaParserListener extends ParseTreeListener {
 	 */
 	void exitStart_Typing(stellaParser.Start_TypingContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link stellaParser#program}.
-	 * @param ctx the parse tree
-	 */
-	void enterProgram(stellaParser.ProgramContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link stellaParser#program}.
-	 * @param ctx the parse tree
-	 */
-	void exitProgram(stellaParser.ProgramContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link stellaParser#listStellaIdent}.
 	 * @param ctx the parse tree
 	 */
@@ -477,6 +527,16 @@ public interface stellaParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitListStellaIdent(stellaParser.ListStellaIdentContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link stellaParser#program}.
+	 * @param ctx the parse tree
+	 */
+	void enterProgram(stellaParser.ProgramContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link stellaParser#program}.
+	 * @param ctx the parse tree
+	 */
+	void exitProgram(stellaParser.ProgramContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link stellaParser#languageDecl}.
 	 * @param ctx the parse tree
@@ -618,25 +678,25 @@ public interface stellaParserListener extends ParseTreeListener {
 	 */
 	void exitThrowType(stellaParser.ThrowTypeContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link stellaParser#expr}.
+	 * Enter a parse tree produced by {@link stellaParser#type9}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpr(stellaParser.ExprContext ctx);
+	void enterType9(stellaParser.Type9Context ctx);
 	/**
-	 * Exit a parse tree produced by {@link stellaParser#expr}.
+	 * Exit a parse tree produced by {@link stellaParser#type9}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpr(stellaParser.ExprContext ctx);
+	void exitType9(stellaParser.Type9Context ctx);
 	/**
-	 * Enter a parse tree produced by {@link stellaParser#listExpr}.
+	 * Enter a parse tree produced by {@link stellaParser#listType9}.
 	 * @param ctx the parse tree
 	 */
-	void enterListExpr(stellaParser.ListExprContext ctx);
+	void enterListType9(stellaParser.ListType9Context ctx);
 	/**
-	 * Exit a parse tree produced by {@link stellaParser#listExpr}.
+	 * Exit a parse tree produced by {@link stellaParser#listType9}.
 	 * @param ctx the parse tree
 	 */
-	void exitListExpr(stellaParser.ListExprContext ctx);
+	void exitListType9(stellaParser.ListType9Context ctx);
 	/**
 	 * Enter a parse tree produced by {@link stellaParser#matchCase}.
 	 * @param ctx the parse tree
@@ -748,6 +808,26 @@ public interface stellaParserListener extends ParseTreeListener {
 	 */
 	void exitListBinding(stellaParser.ListBindingContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link stellaParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpr(stellaParser.ExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link stellaParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpr(stellaParser.ExprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link stellaParser#listExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterListExpr(stellaParser.ListExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link stellaParser#listExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitListExpr(stellaParser.ListExprContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link stellaParser#expr1}.
 	 * @param ctx the parse tree
 	 */
@@ -758,6 +838,26 @@ public interface stellaParserListener extends ParseTreeListener {
 	 */
 	void exitExpr1(stellaParser.Expr1Context ctx);
 	/**
+	 * Enter a parse tree produced by {@link stellaParser#patternBinding}.
+	 * @param ctx the parse tree
+	 */
+	void enterPatternBinding(stellaParser.PatternBindingContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link stellaParser#patternBinding}.
+	 * @param ctx the parse tree
+	 */
+	void exitPatternBinding(stellaParser.PatternBindingContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link stellaParser#listPatternBinding}.
+	 * @param ctx the parse tree
+	 */
+	void enterListPatternBinding(stellaParser.ListPatternBindingContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link stellaParser#listPatternBinding}.
+	 * @param ctx the parse tree
+	 */
+	void exitListPatternBinding(stellaParser.ListPatternBindingContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link stellaParser#expr2}.
 	 * @param ctx the parse tree
 	 */
@@ -767,6 +867,16 @@ public interface stellaParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExpr2(stellaParser.Expr2Context ctx);
+	/**
+	 * Enter a parse tree produced by {@link stellaParser#listExpr2}.
+	 * @param ctx the parse tree
+	 */
+	void enterListExpr2(stellaParser.ListExpr2Context ctx);
+	/**
+	 * Exit a parse tree produced by {@link stellaParser#listExpr2}.
+	 * @param ctx the parse tree
+	 */
+	void exitListExpr2(stellaParser.ListExpr2Context ctx);
 	/**
 	 * Enter a parse tree produced by {@link stellaParser#expr3}.
 	 * @param ctx the parse tree
@@ -788,16 +898,6 @@ public interface stellaParserListener extends ParseTreeListener {
 	 */
 	void exitExpr4(stellaParser.Expr4Context ctx);
 	/**
-	 * Enter a parse tree produced by {@link stellaParser#expr5}.
-	 * @param ctx the parse tree
-	 */
-	void enterExpr5(stellaParser.Expr5Context ctx);
-	/**
-	 * Exit a parse tree produced by {@link stellaParser#expr5}.
-	 * @param ctx the parse tree
-	 */
-	void exitExpr5(stellaParser.Expr5Context ctx);
-	/**
 	 * Enter a parse tree produced by {@link stellaParser#expr6}.
 	 * @param ctx the parse tree
 	 */
@@ -807,6 +907,16 @@ public interface stellaParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExpr6(stellaParser.Expr6Context ctx);
+	/**
+	 * Enter a parse tree produced by {@link stellaParser#expr7}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpr7(stellaParser.Expr7Context ctx);
+	/**
+	 * Exit a parse tree produced by {@link stellaParser#expr7}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpr7(stellaParser.Expr7Context ctx);
 	/**
 	 * Enter a parse tree produced by {@link stellaParser#type}.
 	 * @param ctx the parse tree
@@ -857,6 +967,16 @@ public interface stellaParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitListType(stellaParser.ListTypeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link stellaParser#expr5}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpr5(stellaParser.Expr5Context ctx);
+	/**
+	 * Exit a parse tree produced by {@link stellaParser#expr5}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpr5(stellaParser.Expr5Context ctx);
 	/**
 	 * Enter a parse tree produced by {@link stellaParser#variantFieldType}.
 	 * @param ctx the parse tree

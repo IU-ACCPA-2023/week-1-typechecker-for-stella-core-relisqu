@@ -7,12 +7,12 @@ public class SomeThrowType  extends ThrowType {
   public int line_num, col_num, offset;
   public SomeThrowType(ListType p1) { listtype_ = p1; }
 
-  public <R,A> R accept(Visitor<R,A> v, A arg) { return v.visit(this, arg); }
+  public <R,A> R accept(org.syntax.stella.Absyn.ThrowType.Visitor<R,A> v, A arg) { return v.visit(this, arg); }
 
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) return true;
-    if (o instanceof SomeThrowType) {
-      SomeThrowType x = (SomeThrowType)o;
+    if (o instanceof org.syntax.stella.Absyn.SomeThrowType) {
+      org.syntax.stella.Absyn.SomeThrowType x = (org.syntax.stella.Absyn.SomeThrowType)o;
       return this.listtype_.equals(x.listtype_);
     }
     return false;

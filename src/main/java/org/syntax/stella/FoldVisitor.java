@@ -105,347 +105,6 @@ public abstract class FoldVisitor<R,A> implements AllVisitor<R,A> {
       return r;
     }
 
-/* Expr */
-    public R visit(org.syntax.stella.Absyn.If p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_1.accept(this, arg), r, arg);
-      r = combine(p.expr_2.accept(this, arg), r, arg);
-      r = combine(p.expr_3.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.Let p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_1.accept(this, arg), r, arg);
-      r = combine(p.expr_2.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.LessThan p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_1.accept(this, arg), r, arg);
-      r = combine(p.expr_2.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.LessThanOrEqual p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_1.accept(this, arg), r, arg);
-      r = combine(p.expr_2.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.GreaterThan p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_1.accept(this, arg), r, arg);
-      r = combine(p.expr_2.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.GreaterThanOrEqual p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_1.accept(this, arg), r, arg);
-      r = combine(p.expr_2.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.Equal p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_1.accept(this, arg), r, arg);
-      r = combine(p.expr_2.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.NotEqual p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_1.accept(this, arg), r, arg);
-      r = combine(p.expr_2.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.TypeAsc p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_.accept(this, arg), r, arg);
-      r = combine(p.type_.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.Abstraction p, A arg) {
-      R r = leaf(arg);
-      for (org.syntax.stella.Absyn.ParamDecl x : p.listparamdecl_)
-      {
-        r = combine(x.accept(this, arg), r, arg);
-      }
-      r = combine(p.expr_.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.Tuple p, A arg) {
-      R r = leaf(arg);
-      for (org.syntax.stella.Absyn.Expr x : p.listexpr_)
-      {
-        r = combine(x.accept(this, arg), r, arg);
-      }
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.Record p, A arg) {
-      R r = leaf(arg);
-      for (org.syntax.stella.Absyn.Binding x : p.listbinding_)
-      {
-        r = combine(x.accept(this, arg), r, arg);
-      }
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.Variant p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.exprdata_.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.Match p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_.accept(this, arg), r, arg);
-      for (org.syntax.stella.Absyn.MatchCase x : p.listmatchcase_)
-      {
-        r = combine(x.accept(this, arg), r, arg);
-      }
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.List p, A arg) {
-      R r = leaf(arg);
-      for (org.syntax.stella.Absyn.Expr x : p.listexpr_)
-      {
-        r = combine(x.accept(this, arg), r, arg);
-      }
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.Add p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_1.accept(this, arg), r, arg);
-      r = combine(p.expr_2.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.LogicOr p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_1.accept(this, arg), r, arg);
-      r = combine(p.expr_2.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.Multiply p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_1.accept(this, arg), r, arg);
-      r = combine(p.expr_2.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.LogicAnd p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_1.accept(this, arg), r, arg);
-      r = combine(p.expr_2.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.Application p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_.accept(this, arg), r, arg);
-      for (org.syntax.stella.Absyn.Expr x : p.listexpr_)
-      {
-        r = combine(x.accept(this, arg), r, arg);
-      }
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.ConsList p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_1.accept(this, arg), r, arg);
-      r = combine(p.expr_2.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.Head p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.IsEmpty p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.Tail p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.Succ p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.LogicNot p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.Pred p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.IsZero p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.Fix p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.NatRec p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_1.accept(this, arg), r, arg);
-      r = combine(p.expr_2.accept(this, arg), r, arg);
-      r = combine(p.expr_3.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.Fold p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.type_.accept(this, arg), r, arg);
-      r = combine(p.expr_.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.Unfold p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.type_.accept(this, arg), r, arg);
-      r = combine(p.expr_.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.DotRecord p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.DotTuple p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.ConstTrue p, A arg) {
-      R r = leaf(arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.ConstFalse p, A arg) {
-      R r = leaf(arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.ConstInt p, A arg) {
-      R r = leaf(arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.Var p, A arg) {
-      R r = leaf(arg);
-      return r;
-    }
-
-/* MatchCase */
-    public R visit(org.syntax.stella.Absyn.AMatchCase p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.pattern_.accept(this, arg), r, arg);
-      r = combine(p.expr_.accept(this, arg), r, arg);
-      return r;
-    }
-
-/* OptionalTyping */
-    public R visit(org.syntax.stella.Absyn.NoTyping p, A arg) {
-      R r = leaf(arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.SomeTyping p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.type_.accept(this, arg), r, arg);
-      return r;
-    }
-
-/* PatternData */
-    public R visit(org.syntax.stella.Absyn.NoPatternData p, A arg) {
-      R r = leaf(arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.SomePatternData p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.pattern_.accept(this, arg), r, arg);
-      return r;
-    }
-
-/* ExprData */
-    public R visit(org.syntax.stella.Absyn.NoExprData p, A arg) {
-      R r = leaf(arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.SomeExprData p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_.accept(this, arg), r, arg);
-      return r;
-    }
-
-/* Pattern */
-    public R visit(org.syntax.stella.Absyn.PatternVariant p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.patterndata_.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.PatternTuple p, A arg) {
-      R r = leaf(arg);
-      for (org.syntax.stella.Absyn.Pattern x : p.listpattern_)
-      {
-        r = combine(x.accept(this, arg), r, arg);
-      }
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.PatternRecord p, A arg) {
-      R r = leaf(arg);
-      for (org.syntax.stella.Absyn.LabelledPattern x : p.listlabelledpattern_)
-      {
-        r = combine(x.accept(this, arg), r, arg);
-      }
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.PatternList p, A arg) {
-      R r = leaf(arg);
-      for (org.syntax.stella.Absyn.Pattern x : p.listpattern_)
-      {
-        r = combine(x.accept(this, arg), r, arg);
-      }
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.PatternCons p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.pattern_1.accept(this, arg), r, arg);
-      r = combine(p.pattern_2.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.PatternFalse p, A arg) {
-      R r = leaf(arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.PatternTrue p, A arg) {
-      R r = leaf(arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.PatternInt p, A arg) {
-      R r = leaf(arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.PatternSucc p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.pattern_.accept(this, arg), r, arg);
-      return r;
-    }
-    public R visit(org.syntax.stella.Absyn.PatternVar p, A arg) {
-      R r = leaf(arg);
-      return r;
-    }
-
-/* LabelledPattern */
-    public R visit(org.syntax.stella.Absyn.ALabelledPattern p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.pattern_.accept(this, arg), r, arg);
-      return r;
-    }
-
-/* Binding */
-    public R visit(org.syntax.stella.Absyn.ABinding p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_.accept(this, arg), r, arg);
-      return r;
-    }
-
 /* Type */
     public R visit(org.syntax.stella.Absyn.TypeFun p, A arg) {
       R r = leaf(arg);
@@ -510,6 +169,413 @@ public abstract class FoldVisitor<R,A> implements AllVisitor<R,A> {
     }
     public R visit(org.syntax.stella.Absyn.TypeVar p, A arg) {
       R r = leaf(arg);
+      return r;
+    }
+
+/* MatchCase */
+    public R visit(org.syntax.stella.Absyn.AMatchCase p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.pattern_.accept(this, arg), r, arg);
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      return r;
+    }
+
+/* OptionalTyping */
+    public R visit(org.syntax.stella.Absyn.NoTyping p, A arg) {
+      R r = leaf(arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.SomeTyping p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.type_.accept(this, arg), r, arg);
+      return r;
+    }
+
+/* PatternData */
+    public R visit(org.syntax.stella.Absyn.NoPatternData p, A arg) {
+      R r = leaf(arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.SomePatternData p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.pattern_.accept(this, arg), r, arg);
+      return r;
+    }
+
+/* ExprData */
+    public R visit(org.syntax.stella.Absyn.NoExprData p, A arg) {
+      R r = leaf(arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.SomeExprData p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      return r;
+    }
+
+/* Pattern */
+    public R visit(org.syntax.stella.Absyn.PatternVariant p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.patterndata_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.PatternInl p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.pattern_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.PatternInr p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.pattern_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.PatternTuple p, A arg) {
+      R r = leaf(arg);
+      for (org.syntax.stella.Absyn.Pattern x : p.listpattern_)
+      {
+        r = combine(x.accept(this, arg), r, arg);
+      }
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.PatternRecord p, A arg) {
+      R r = leaf(arg);
+      for (org.syntax.stella.Absyn.LabelledPattern x : p.listlabelledpattern_)
+      {
+        r = combine(x.accept(this, arg), r, arg);
+      }
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.PatternList p, A arg) {
+      R r = leaf(arg);
+      for (org.syntax.stella.Absyn.Pattern x : p.listpattern_)
+      {
+        r = combine(x.accept(this, arg), r, arg);
+      }
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.PatternCons p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.pattern_1.accept(this, arg), r, arg);
+      r = combine(p.pattern_2.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.PatternFalse p, A arg) {
+      R r = leaf(arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.PatternTrue p, A arg) {
+      R r = leaf(arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.PatternUnit p, A arg) {
+      R r = leaf(arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.PatternInt p, A arg) {
+      R r = leaf(arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.PatternSucc p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.pattern_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.PatternVar p, A arg) {
+      R r = leaf(arg);
+      return r;
+    }
+
+/* LabelledPattern */
+    public R visit(org.syntax.stella.Absyn.ALabelledPattern p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.pattern_.accept(this, arg), r, arg);
+      return r;
+    }
+
+/* Binding */
+    public R visit(org.syntax.stella.Absyn.ABinding p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      return r;
+    }
+
+/* Expr */
+    public R visit(org.syntax.stella.Absyn.Sequence p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_1.accept(this, arg), r, arg);
+      r = combine(p.expr_2.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.If p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_1.accept(this, arg), r, arg);
+      r = combine(p.expr_2.accept(this, arg), r, arg);
+      r = combine(p.expr_3.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.Let p, A arg) {
+      R r = leaf(arg);
+      for (org.syntax.stella.Absyn.PatternBinding x : p.listpatternbinding_)
+      {
+        r = combine(x.accept(this, arg), r, arg);
+      }
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.LetRec p, A arg) {
+      R r = leaf(arg);
+      for (org.syntax.stella.Absyn.PatternBinding x : p.listpatternbinding_)
+      {
+        r = combine(x.accept(this, arg), r, arg);
+      }
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.LessThan p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_1.accept(this, arg), r, arg);
+      r = combine(p.expr_2.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.LessThanOrEqual p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_1.accept(this, arg), r, arg);
+      r = combine(p.expr_2.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.GreaterThan p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_1.accept(this, arg), r, arg);
+      r = combine(p.expr_2.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.GreaterThanOrEqual p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_1.accept(this, arg), r, arg);
+      r = combine(p.expr_2.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.Equal p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_1.accept(this, arg), r, arg);
+      r = combine(p.expr_2.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.NotEqual p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_1.accept(this, arg), r, arg);
+      r = combine(p.expr_2.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.TypeAsc p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      r = combine(p.type_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.Abstraction p, A arg) {
+      R r = leaf(arg);
+      for (org.syntax.stella.Absyn.ParamDecl x : p.listparamdecl_)
+      {
+        r = combine(x.accept(this, arg), r, arg);
+      }
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.Variant p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.exprdata_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.Match p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      for (org.syntax.stella.Absyn.MatchCase x : p.listmatchcase_)
+      {
+        r = combine(x.accept(this, arg), r, arg);
+      }
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.List p, A arg) {
+      R r = leaf(arg);
+      for (org.syntax.stella.Absyn.Expr x : p.listexpr_)
+      {
+        r = combine(x.accept(this, arg), r, arg);
+      }
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.Add p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_1.accept(this, arg), r, arg);
+      r = combine(p.expr_2.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.Subtract p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_1.accept(this, arg), r, arg);
+      r = combine(p.expr_2.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.LogicOr p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_1.accept(this, arg), r, arg);
+      r = combine(p.expr_2.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.Multiply p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_1.accept(this, arg), r, arg);
+      r = combine(p.expr_2.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.Divide p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_1.accept(this, arg), r, arg);
+      r = combine(p.expr_2.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.LogicAnd p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_1.accept(this, arg), r, arg);
+      r = combine(p.expr_2.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.Application p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      for (org.syntax.stella.Absyn.Expr x : p.listexpr_)
+      {
+        r = combine(x.accept(this, arg), r, arg);
+      }
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.DotRecord p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.DotTuple p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.Tuple p, A arg) {
+      R r = leaf(arg);
+      for (org.syntax.stella.Absyn.Expr x : p.listexpr_)
+      {
+        r = combine(x.accept(this, arg), r, arg);
+      }
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.Record p, A arg) {
+      R r = leaf(arg);
+      for (org.syntax.stella.Absyn.Binding x : p.listbinding_)
+      {
+        r = combine(x.accept(this, arg), r, arg);
+      }
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.ConsList p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_1.accept(this, arg), r, arg);
+      r = combine(p.expr_2.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.Head p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.IsEmpty p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.Tail p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.Inl p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.Inr p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.Succ p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.LogicNot p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.Pred p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.IsZero p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.Fix p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.NatRec p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_1.accept(this, arg), r, arg);
+      r = combine(p.expr_2.accept(this, arg), r, arg);
+      r = combine(p.expr_3.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.Fold p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.type_.accept(this, arg), r, arg);
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.Unfold p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.type_.accept(this, arg), r, arg);
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.ConstTrue p, A arg) {
+      R r = leaf(arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.ConstFalse p, A arg) {
+      R r = leaf(arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.ConstUnit p, A arg) {
+      R r = leaf(arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.ConstInt p, A arg) {
+      R r = leaf(arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.Var p, A arg) {
+      R r = leaf(arg);
+      return r;
+    }
+
+/* PatternBinding */
+    public R visit(org.syntax.stella.Absyn.APatternBinding p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.pattern_.accept(this, arg), r, arg);
+      r = combine(p.expr_.accept(this, arg), r, arg);
       return r;
     }
 

@@ -8,12 +8,12 @@ public class Unfold  extends Expr {
   public int line_num, col_num, offset;
   public Unfold(Type p1, Expr p2) { type_ = p1; expr_ = p2; }
 
-  public <R,A> R accept(Visitor<R,A> v, A arg) { return v.visit(this, arg); }
+  public <R,A> R accept(org.syntax.stella.Absyn.Expr.Visitor<R,A> v, A arg) { return v.visit(this, arg); }
 
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) return true;
-    if (o instanceof Unfold) {
-      Unfold x = (Unfold)o;
+    if (o instanceof org.syntax.stella.Absyn.Unfold) {
+      org.syntax.stella.Absyn.Unfold x = (org.syntax.stella.Absyn.Unfold)o;
       return this.type_.equals(x.type_) && this.expr_.equals(x.expr_);
     }
     return false;

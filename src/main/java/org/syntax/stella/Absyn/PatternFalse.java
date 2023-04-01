@@ -6,11 +6,11 @@ public class PatternFalse  extends Pattern {
   public int line_num, col_num, offset;
   public PatternFalse() { }
 
-  public <R,A> R accept(Visitor<R,A> v, A arg) { return v.visit(this, arg); }
+  public <R,A> R accept(org.syntax.stella.Absyn.Pattern.Visitor<R,A> v, A arg) { return v.visit(this, arg); }
 
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) return true;
-    if (o instanceof PatternFalse) {
+    if (o instanceof org.syntax.stella.Absyn.PatternFalse) {
       return true;
     }
     return false;

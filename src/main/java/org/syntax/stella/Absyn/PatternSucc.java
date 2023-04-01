@@ -7,12 +7,12 @@ public class PatternSucc  extends Pattern {
   public int line_num, col_num, offset;
   public PatternSucc(Pattern p1) { pattern_ = p1; }
 
-  public <R,A> R accept(Visitor<R,A> v, A arg) { return v.visit(this, arg); }
+  public <R,A> R accept(org.syntax.stella.Absyn.Pattern.Visitor<R,A> v, A arg) { return v.visit(this, arg); }
 
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) return true;
-    if (o instanceof PatternSucc) {
-      PatternSucc x = (PatternSucc)o;
+    if (o instanceof org.syntax.stella.Absyn.PatternSucc) {
+      org.syntax.stella.Absyn.PatternSucc x = (org.syntax.stella.Absyn.PatternSucc)o;
       return this.pattern_.equals(x.pattern_);
     }
     return false;

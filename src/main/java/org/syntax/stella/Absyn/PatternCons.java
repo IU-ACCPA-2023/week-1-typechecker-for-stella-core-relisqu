@@ -7,12 +7,12 @@ public class PatternCons  extends Pattern {
   public int line_num, col_num, offset;
   public PatternCons(Pattern p1, Pattern p2) { pattern_1 = p1; pattern_2 = p2; }
 
-  public <R,A> R accept(Visitor<R,A> v, A arg) { return v.visit(this, arg); }
+  public <R,A> R accept(org.syntax.stella.Absyn.Pattern.Visitor<R,A> v, A arg) { return v.visit(this, arg); }
 
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) return true;
-    if (o instanceof PatternCons) {
-      PatternCons x = (PatternCons)o;
+    if (o instanceof org.syntax.stella.Absyn.PatternCons) {
+      org.syntax.stella.Absyn.PatternCons x = (org.syntax.stella.Absyn.PatternCons)o;
       return this.pattern_1.equals(x.pattern_1) && this.pattern_2.equals(x.pattern_2);
     }
     return false;

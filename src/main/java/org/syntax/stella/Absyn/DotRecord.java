@@ -8,12 +8,12 @@ public class DotRecord  extends Expr {
   public int line_num, col_num, offset;
   public DotRecord(Expr p1, String p2) { expr_ = p1; stellaident_ = p2; }
 
-  public <R,A> R accept(Visitor<R,A> v, A arg) { return v.visit(this, arg); }
+  public <R,A> R accept(org.syntax.stella.Absyn.Expr.Visitor<R,A> v, A arg) { return v.visit(this, arg); }
 
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) return true;
-    if (o instanceof DotRecord) {
-      DotRecord x = (DotRecord)o;
+    if (o instanceof org.syntax.stella.Absyn.DotRecord) {
+      org.syntax.stella.Absyn.DotRecord x = (org.syntax.stella.Absyn.DotRecord)o;
       return this.expr_.equals(x.expr_) && this.stellaident_.equals(x.stellaident_);
     }
     return false;

@@ -3,10 +3,10 @@
 package org.syntax.stella.Absyn;
 
 public abstract class ExprData implements java.io.Serializable {
-  public abstract <R,A> R accept(Visitor<R,A> v, A arg);
+  public abstract <R,A> R accept(ExprData.Visitor<R,A> v, A arg);
   public interface Visitor <R,A> {
-    public R visit(NoExprData p, A arg);
-    public R visit(SomeExprData p, A arg);
+    public R visit(org.syntax.stella.Absyn.NoExprData p, A arg);
+    public R visit(org.syntax.stella.Absyn.SomeExprData p, A arg);
 
   }
 

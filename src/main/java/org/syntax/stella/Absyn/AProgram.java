@@ -9,12 +9,12 @@ public class AProgram  extends Program {
   public int line_num, col_num, offset;
   public AProgram(LanguageDecl p1, ListExtension p2, ListDecl p3) { languagedecl_ = p1; listextension_ = p2; listdecl_ = p3; }
 
-  public <R,A> R accept(Visitor<R,A> v, A arg) { return v.visit(this, arg); }
+  public <R,A> R accept(org.syntax.stella.Absyn.Program.Visitor<R,A> v, A arg) { return v.visit(this, arg); }
 
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) return true;
-    if (o instanceof AProgram) {
-      AProgram x = (AProgram)o;
+    if (o instanceof org.syntax.stella.Absyn.AProgram) {
+      org.syntax.stella.Absyn.AProgram x = (org.syntax.stella.Absyn.AProgram)o;
       return this.languagedecl_.equals(x.languagedecl_) && this.listextension_.equals(x.listextension_) && this.listdecl_.equals(x.listdecl_);
     }
     return false;

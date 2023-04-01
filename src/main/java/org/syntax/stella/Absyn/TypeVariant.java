@@ -7,12 +7,12 @@ public class TypeVariant  extends Type {
   public int line_num, col_num, offset;
   public TypeVariant(ListVariantFieldType p1) { listvariantfieldtype_ = p1; }
 
-  public <R,A> R accept(Visitor<R,A> v, A arg) { return v.visit(this, arg); }
+  public <R,A> R accept(org.syntax.stella.Absyn.Type.Visitor<R,A> v, A arg) { return v.visit(this, arg); }
 
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) return true;
-    if (o instanceof TypeVariant) {
-      TypeVariant x = (TypeVariant)o;
+    if (o instanceof org.syntax.stella.Absyn.TypeVariant) {
+      org.syntax.stella.Absyn.TypeVariant x = (org.syntax.stella.Absyn.TypeVariant)o;
       return this.listvariantfieldtype_.equals(x.listvariantfieldtype_);
     }
     return false;

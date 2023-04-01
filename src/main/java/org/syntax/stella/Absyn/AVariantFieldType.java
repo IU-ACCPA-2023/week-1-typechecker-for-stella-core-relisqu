@@ -8,12 +8,12 @@ public class AVariantFieldType  extends VariantFieldType {
   public int line_num, col_num, offset;
   public AVariantFieldType(String p1, OptionalTyping p2) { stellaident_ = p1; optionaltyping_ = p2; }
 
-  public <R,A> R accept(Visitor<R,A> v, A arg) { return v.visit(this, arg); }
+  public <R,A> R accept(org.syntax.stella.Absyn.VariantFieldType.Visitor<R,A> v, A arg) { return v.visit(this, arg); }
 
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) return true;
-    if (o instanceof AVariantFieldType) {
-      AVariantFieldType x = (AVariantFieldType)o;
+    if (o instanceof org.syntax.stella.Absyn.AVariantFieldType) {
+      org.syntax.stella.Absyn.AVariantFieldType x = (org.syntax.stella.Absyn.AVariantFieldType)o;
       return this.stellaident_.equals(x.stellaident_) && this.optionaltyping_.equals(x.optionaltyping_);
     }
     return false;

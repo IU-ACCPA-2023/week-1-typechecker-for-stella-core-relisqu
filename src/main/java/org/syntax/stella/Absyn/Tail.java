@@ -7,12 +7,12 @@ public class Tail  extends Expr {
   public int line_num, col_num, offset;
   public Tail(Expr p1) { expr_ = p1; }
 
-  public <R,A> R accept(Visitor<R,A> v, A arg) { return v.visit(this, arg); }
+  public <R,A> R accept(org.syntax.stella.Absyn.Expr.Visitor<R,A> v, A arg) { return v.visit(this, arg); }
 
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) return true;
-    if (o instanceof Tail) {
-      Tail x = (Tail)o;
+    if (o instanceof org.syntax.stella.Absyn.Tail) {
+      org.syntax.stella.Absyn.Tail x = (org.syntax.stella.Absyn.Tail)o;
       return this.expr_.equals(x.expr_);
     }
     return false;

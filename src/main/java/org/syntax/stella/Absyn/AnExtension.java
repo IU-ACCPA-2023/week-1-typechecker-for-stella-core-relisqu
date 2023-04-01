@@ -7,12 +7,12 @@ public class AnExtension  extends Extension {
   public int line_num, col_num, offset;
   public AnExtension(ListExtensionName p1) { listextensionname_ = p1; }
 
-  public <R,A> R accept(Visitor<R,A> v, A arg) { return v.visit(this, arg); }
+  public <R,A> R accept(org.syntax.stella.Absyn.Extension.Visitor<R,A> v, A arg) { return v.visit(this, arg); }
 
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) return true;
-    if (o instanceof AnExtension) {
-      AnExtension x = (AnExtension)o;
+    if (o instanceof org.syntax.stella.Absyn.AnExtension) {
+      org.syntax.stella.Absyn.AnExtension x = (org.syntax.stella.Absyn.AnExtension)o;
       return this.listextensionname_.equals(x.listextensionname_);
     }
     return false;
