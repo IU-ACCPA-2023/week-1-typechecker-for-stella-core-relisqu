@@ -2,6 +2,7 @@ package org.stella.typecheck
 
 import Output
 import org.syntax.stella.Absyn.*
+import java.util.LinkedHashMap
 
 object TypeCheck {
     // class for storing the current variables in scope and their types
@@ -66,6 +67,38 @@ object TypeCheck {
             is ConstFalse, is ConstTrue -> return TypeBool()  //if it is just true or false, return bool
             is ConstInt -> { // if it is an integer, return Nat
                 return TypeNat()
+            }
+            is ConstUnit -> { // if it is a unit, return Unit
+                return TypeUnit()
+            }
+
+            is Tuple -> { // if it is a tuple, return a tuple with the types of the expressions in the tuple
+                val list = ListType()
+                for (i in expr.listexpr_) {
+                    list.add(calculateExpression(Context(context.currentVars), i))
+                }
+                return TypeTuple(list)
+            }
+
+            is DotTuple -> { // if it is a dot tuple, return the type of the expression in the tuple
+
+                when(val tupleExp = calculateExpression( Context(context.currentVars), expr.expr_)){
+                    is TypeTuple->{
+
+                        Output(expr.integer_ <= tupleExp.listtype_.size && expr.integer_ > 0).ThrowOutOfBoundariesEr(
+                            expr.integer_,
+                            "${expr.line_num}:${expr.col_num}"
+                        );
+
+                        return tupleExp.listtype_[expr.integer_-1]
+
+                    }
+                    else->{
+                        Output(false).
+                            ThrowExpectedGotEr(TypeTuple(ListType()), tupleExp, "${expr.line_num}:${expr.col_num}")
+                    }
+                }
+                return TypeUnit();
             }
 
             is If -> { //if it is an if expression, check if the condition is bool and the two expressions are the same type
@@ -189,10 +222,69 @@ object TypeCheck {
                 return TypeFun(paramTypes, calculatedExpression) //return the type of the function
             }
 
+            is Inl -> { //if we have an inl expression, we need to calculate the type of the expression and return the type of the sum
+                val calculatedExpression = calculateExpression(Context(context.currentVars), expr.expr_)
+                return TypeSum(calculatedExpression, null)
+            }
+            is Inr -> { //if we have an inr expression, we need to calculate the type of the expression and return the type of the sum
+                val calculatedExpression = calculateExpression(Context(context.currentVars), expr.expr_)
+                return TypeSum(null, calculatedExpression)
+            }
+            is Match -> {
+
+                var sum = calculateExpression(Context(context.currentVars), expr.expr_)
+                //check if it is type sum
+                Output(sum is TypeSum).
+                    ThrowExpectedGotEr(TypeSum(null, null), sum, "${expr.line_num}:${expr.col_num}")
+
+                var outputTypes = ListType()
+
+                for (matchCase in expr.listmatchcase_) {
+                    when (matchCase) {
+                        is AMatchCase -> {
+                            val pattern = matchCase.pattern_
+
+                            when(pattern){
+                                is PatternInl ->{
+                                    when(val ident= pattern.pattern_){
+                                        is PatternVar ->{
+                                            var identName = ident.stellaident_
+                                            context.currentVars[identName] = (sum as TypeSum).type_1                                    }
+                                    }
+                                }
+                                is PatternInr ->{
+                                    when(val ident= pattern.pattern_){
+                                        is PatternVar ->{
+                                            val identName = ident.stellaident_
+                                            context.currentVars[identName] = (sum as TypeSum).type_2                                    }
+                                    }
+                                }
+
+                            }
+                            val innerMatchExprType = calculateExpression(Context(context.currentVars), matchCase.expr_)
+
+                            if(outputTypes.size==0){
+                                outputTypes.add(innerMatchExprType)
+                            }else{
+                                Output(outputTypes[0]== innerMatchExprType).
+                                ThrowExpectedGotEr(outputTypes[0], innerMatchExprType, "${expr.line_num}:${expr.col_num}")
+                            }
+                        }
+                    }
+                }
+                return outputTypes[0]
+            }
+
         }
         return TypeBool()
 
     }
+
+
+
+
+
+
 
     /**
      * Checks if the expression is a number and throws an error if it is not

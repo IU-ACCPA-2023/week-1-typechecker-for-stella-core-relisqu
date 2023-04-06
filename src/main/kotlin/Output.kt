@@ -70,4 +70,12 @@ class Output (assertExpression: Boolean){
                 "in $where:\n " +
                 "Variable $name is not defined")
     }
+
+    fun ThrowOutOfBoundariesEr(index: Int, s: String) {
+        if (assertExpression) return;
+        throw TypeException("TYPE ERROR\n " +
+                "in $s:\n " +
+                "Index [$index] is out of boundaries of the tuple")
+
+    }
 }
