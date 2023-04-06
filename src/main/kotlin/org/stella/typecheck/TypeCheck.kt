@@ -38,7 +38,7 @@ object TypeCheck {
 
                         when (returnType) {
                             is SomeReturnType -> {
-                                Output(returnType.type_ == calculatedExpression).
+                                Output(checkEq(returnType.type_ , calculatedExpression)).
                                         ThrowExpectedGotEr( //check if return type is the same as the calculated type
                                             returnType.type_,
                                             calculatedExpression,
@@ -106,10 +106,10 @@ object TypeCheck {
                 val trueExp = calculateExpression(Context(context.currentVars), expr.expr_2)
                 val falseExp = calculateExpression(Context(context.currentVars), expr.expr_3)
 
-                Output(trueExp == falseExp).
+                Output(checkEq(trueExp, falseExp)).
                         ThrowExpectedEqTypes(trueExp, falseExp, "${expr.line_num}:${expr.col_num}")
 
-                Output(ifCondition == TypeBool()).ThrowExpectedGotEr(
+                Output(checkEq(ifCondition, TypeBool())).ThrowExpectedGotEr(
                     TypeBool(),
                     ifCondition,
                     "${expr.line_num}:${expr.col_num}"
@@ -144,12 +144,12 @@ object TypeCheck {
 
                         val paramType = function.listtype_[0]
 
-                        Output(paramType == TypeNat()). //check if the parameter is Nat
+                        Output(checkEq(paramType , TypeNat())). //check if the parameter is Nat
                                 ThrowExpectedGotEr(TypeNat(), paramType, "${expr.line_num}:${expr.col_num}")
 
                         val returnType = function.type_
 
-                        Output(returnType == TypeFun(expInp, initValueType)).ThrowExpectedGotEr(
+                        Output(checkEq(returnType, TypeFun(expInp, initValueType))).ThrowExpectedGotEr(
                             TypeFun( //check if the return type is fn(T) -> T
                                 expInp,
                                 initValueType
@@ -179,7 +179,7 @@ object TypeCheck {
                 when (func) {
                     is TypeFun -> { //check if the function has 1 argument and it has the same type as the argument of application
                         if (func.listtype_.size == 1) {
-                            Output(func.listtype_[0] == args[0]).ThrowExpectedGotEr(
+                            Output(checkEq(func.listtype_[0], args[0])).ThrowExpectedGotEr(
                                 func.listtype_[0],
                                 args[0],
                                 "${expr.line_num}:${expr.col_num}"
@@ -266,7 +266,7 @@ object TypeCheck {
                             if(outputTypes.size==0){
                                 outputTypes.add(innerMatchExprType)
                             }else{
-                                Output(outputTypes[0]== innerMatchExprType).
+                                Output(checkEq(outputTypes[0], innerMatchExprType)).
                                 ThrowExpectedGotEr(outputTypes[0], innerMatchExprType, "${expr.line_num}:${expr.col_num}")
                             }
                         }
@@ -281,7 +281,22 @@ object TypeCheck {
     }
 
 
+    private fun checkEq(arg1: Type, arg2: Type?): Boolean {
+        when(arg1){
+            is TypeSum -> {
+                return when(arg2) {
+                    is TypeSum -> {
+                        checkEq(arg1.type_1,arg2.type_1) || checkEq(arg1.type_2,arg2.type_2)
+                    }
 
+                    else -> {
+                        false
+                    }
+                }
+            }
+        }
+        return arg1 == arg2
+    }
 
 
 
@@ -295,7 +310,7 @@ object TypeCheck {
      */
     private fun checkIfExprIsNumber(context: Context, expr: Expr, where: String): Type {
         val innerExpr = calculateExpression(Context(context.currentVars), expr)
-        Output(innerExpr == TypeNat()).
+        Output(checkEq(innerExpr, TypeNat())).
                 ThrowExpectedGotEr(TypeNat(), innerExpr, where)
 
         return innerExpr
