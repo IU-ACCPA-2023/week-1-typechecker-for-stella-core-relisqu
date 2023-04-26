@@ -68,6 +68,17 @@ public class VisitSkel
       p.type_.accept(new TypeVisitor<R,A>(), arg);
       return null;
     }
+    public R visit(org.syntax.stella.Absyn.DeclExceptionType p, A arg)
+    { /* Code for DeclExceptionType goes here */
+      p.type_.accept(new TypeVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(org.syntax.stella.Absyn.DeclExceptionVariant p, A arg)
+    { /* Code for DeclExceptionVariant goes here */
+      //p.stellaident_;
+      p.type_.accept(new TypeVisitor<R,A>(), arg);
+      return null;
+    }
   }
   public class LocalDeclVisitor<R,A> implements org.syntax.stella.Absyn.LocalDecl.Visitor<R,A>
   {
@@ -177,6 +188,19 @@ public class VisitSkel
     }
     public R visit(org.syntax.stella.Absyn.TypeUnit p, A arg)
     { /* Code for TypeUnit goes here */
+      return null;
+    }
+    public R visit(org.syntax.stella.Absyn.TypeTop p, A arg)
+    { /* Code for TypeTop goes here */
+      return null;
+    }
+    public R visit(org.syntax.stella.Absyn.TypeBottom p, A arg)
+    { /* Code for TypeBottom goes here */
+      return null;
+    }
+    public R visit(org.syntax.stella.Absyn.TypeRef p, A arg)
+    { /* Code for TypeRef goes here */
+      p.type_.accept(new TypeVisitor<R,A>(), arg);
       return null;
     }
     public R visit(org.syntax.stella.Absyn.TypeVar p, A arg)
@@ -329,13 +353,6 @@ public class VisitSkel
       p.expr_2.accept(new ExprVisitor<R,A>(), arg);
       return null;
     }
-    public R visit(org.syntax.stella.Absyn.If p, A arg)
-    { /* Code for If goes here */
-      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
-      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
-      p.expr_3.accept(new ExprVisitor<R,A>(), arg);
-      return null;
-    }
     public R visit(org.syntax.stella.Absyn.Let p, A arg)
     { /* Code for Let goes here */
       for (org.syntax.stella.Absyn.PatternBinding x: p.listpatternbinding_) {
@@ -350,6 +367,19 @@ public class VisitSkel
         x.accept(new PatternBindingVisitor<R,A>(), arg);
       }
       p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(org.syntax.stella.Absyn.Assign p, A arg)
+    { /* Code for Assign goes here */
+      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
+      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(org.syntax.stella.Absyn.If p, A arg)
+    { /* Code for If goes here */
+      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
+      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
+      p.expr_3.accept(new ExprVisitor<R,A>(), arg);
       return null;
     }
     public R visit(org.syntax.stella.Absyn.LessThan p, A arg)
@@ -390,6 +420,12 @@ public class VisitSkel
     }
     public R visit(org.syntax.stella.Absyn.TypeAsc p, A arg)
     { /* Code for TypeAsc goes here */
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      p.type_.accept(new TypeVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(org.syntax.stella.Absyn.TypeCast p, A arg)
+    { /* Code for TypeCast goes here */
       p.expr_.accept(new ExprVisitor<R,A>(), arg);
       p.type_.accept(new TypeVisitor<R,A>(), arg);
       return null;
@@ -459,6 +495,16 @@ public class VisitSkel
       p.expr_2.accept(new ExprVisitor<R,A>(), arg);
       return null;
     }
+    public R visit(org.syntax.stella.Absyn.Ref p, A arg)
+    { /* Code for Ref goes here */
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(org.syntax.stella.Absyn.Deref p, A arg)
+    { /* Code for Deref goes here */
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
     public R visit(org.syntax.stella.Absyn.Application p, A arg)
     { /* Code for Application goes here */
       p.expr_.accept(new ExprVisitor<R,A>(), arg);
@@ -512,6 +558,28 @@ public class VisitSkel
     public R visit(org.syntax.stella.Absyn.Tail p, A arg)
     { /* Code for Tail goes here */
       p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(org.syntax.stella.Absyn.Panic p, A arg)
+    { /* Code for Panic goes here */
+      return null;
+    }
+    public R visit(org.syntax.stella.Absyn.Throw p, A arg)
+    { /* Code for Throw goes here */
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(org.syntax.stella.Absyn.TryCatch p, A arg)
+    { /* Code for TryCatch goes here */
+      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
+      p.pattern_.accept(new PatternVisitor<R,A>(), arg);
+      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(org.syntax.stella.Absyn.TryWith p, A arg)
+    { /* Code for TryWith goes here */
+      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
+      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
       return null;
     }
     public R visit(org.syntax.stella.Absyn.Inl p, A arg)
@@ -583,6 +651,11 @@ public class VisitSkel
     public R visit(org.syntax.stella.Absyn.ConstInt p, A arg)
     { /* Code for ConstInt goes here */
       //p.integer_;
+      return null;
+    }
+    public R visit(org.syntax.stella.Absyn.ConstMemory p, A arg)
+    { /* Code for ConstMemory goes here */
+      //p.memoryaddress_;
       return null;
     }
     public R visit(org.syntax.stella.Absyn.Var p, A arg)

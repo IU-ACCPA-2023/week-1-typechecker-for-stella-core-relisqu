@@ -59,6 +59,16 @@ public abstract class FoldVisitor<R,A> implements AllVisitor<R,A> {
       r = combine(p.type_.accept(this, arg), r, arg);
       return r;
     }
+    public R visit(org.syntax.stella.Absyn.DeclExceptionType p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.type_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.DeclExceptionVariant p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.type_.accept(this, arg), r, arg);
+      return r;
+    }
 
 /* LocalDecl */
     public R visit(org.syntax.stella.Absyn.ALocalDecl p, A arg) {
@@ -165,6 +175,19 @@ public abstract class FoldVisitor<R,A> implements AllVisitor<R,A> {
     }
     public R visit(org.syntax.stella.Absyn.TypeUnit p, A arg) {
       R r = leaf(arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.TypeTop p, A arg) {
+      R r = leaf(arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.TypeBottom p, A arg) {
+      R r = leaf(arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.TypeRef p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.type_.accept(this, arg), r, arg);
       return r;
     }
     public R visit(org.syntax.stella.Absyn.TypeVar p, A arg) {
@@ -306,13 +329,6 @@ public abstract class FoldVisitor<R,A> implements AllVisitor<R,A> {
       r = combine(p.expr_2.accept(this, arg), r, arg);
       return r;
     }
-    public R visit(org.syntax.stella.Absyn.If p, A arg) {
-      R r = leaf(arg);
-      r = combine(p.expr_1.accept(this, arg), r, arg);
-      r = combine(p.expr_2.accept(this, arg), r, arg);
-      r = combine(p.expr_3.accept(this, arg), r, arg);
-      return r;
-    }
     public R visit(org.syntax.stella.Absyn.Let p, A arg) {
       R r = leaf(arg);
       for (org.syntax.stella.Absyn.PatternBinding x : p.listpatternbinding_)
@@ -329,6 +345,19 @@ public abstract class FoldVisitor<R,A> implements AllVisitor<R,A> {
         r = combine(x.accept(this, arg), r, arg);
       }
       r = combine(p.expr_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.Assign p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_1.accept(this, arg), r, arg);
+      r = combine(p.expr_2.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.If p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_1.accept(this, arg), r, arg);
+      r = combine(p.expr_2.accept(this, arg), r, arg);
+      r = combine(p.expr_3.accept(this, arg), r, arg);
       return r;
     }
     public R visit(org.syntax.stella.Absyn.LessThan p, A arg) {
@@ -368,6 +397,12 @@ public abstract class FoldVisitor<R,A> implements AllVisitor<R,A> {
       return r;
     }
     public R visit(org.syntax.stella.Absyn.TypeAsc p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      r = combine(p.type_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.TypeCast p, A arg) {
       R r = leaf(arg);
       r = combine(p.expr_.accept(this, arg), r, arg);
       r = combine(p.type_.accept(this, arg), r, arg);
@@ -440,6 +475,16 @@ public abstract class FoldVisitor<R,A> implements AllVisitor<R,A> {
       r = combine(p.expr_2.accept(this, arg), r, arg);
       return r;
     }
+    public R visit(org.syntax.stella.Absyn.Ref p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.Deref p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      return r;
+    }
     public R visit(org.syntax.stella.Absyn.Application p, A arg) {
       R r = leaf(arg);
       r = combine(p.expr_.accept(this, arg), r, arg);
@@ -494,6 +539,28 @@ public abstract class FoldVisitor<R,A> implements AllVisitor<R,A> {
     public R visit(org.syntax.stella.Absyn.Tail p, A arg) {
       R r = leaf(arg);
       r = combine(p.expr_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.Panic p, A arg) {
+      R r = leaf(arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.Throw p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.TryCatch p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_1.accept(this, arg), r, arg);
+      r = combine(p.pattern_.accept(this, arg), r, arg);
+      r = combine(p.expr_2.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.TryWith p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_1.accept(this, arg), r, arg);
+      r = combine(p.expr_2.accept(this, arg), r, arg);
       return r;
     }
     public R visit(org.syntax.stella.Absyn.Inl p, A arg) {
@@ -563,6 +630,10 @@ public abstract class FoldVisitor<R,A> implements AllVisitor<R,A> {
       return r;
     }
     public R visit(org.syntax.stella.Absyn.ConstInt p, A arg) {
+      R r = leaf(arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.ConstMemory p, A arg) {
       R r = leaf(arg);
       return r;
     }

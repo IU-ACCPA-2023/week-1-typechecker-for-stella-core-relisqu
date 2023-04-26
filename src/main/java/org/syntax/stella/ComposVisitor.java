@@ -88,6 +88,17 @@ public class ComposVisitor<A> implements
       org.syntax.stella.Absyn.Type type_ = p.type_.accept(this, arg);
       return new org.syntax.stella.Absyn.DeclTypeAlias(stellaident_, type_);
     }
+    public org.syntax.stella.Absyn.Decl visit(org.syntax.stella.Absyn.DeclExceptionType p, A arg)
+    {
+      org.syntax.stella.Absyn.Type type_ = p.type_.accept(this, arg);
+      return new org.syntax.stella.Absyn.DeclExceptionType(type_);
+    }
+    public org.syntax.stella.Absyn.Decl visit(org.syntax.stella.Absyn.DeclExceptionVariant p, A arg)
+    {
+      String stellaident_ = p.stellaident_;
+      org.syntax.stella.Absyn.Type type_ = p.type_.accept(this, arg);
+      return new org.syntax.stella.Absyn.DeclExceptionVariant(stellaident_, type_);
+    }
 
     /* LocalDecl */
     public org.syntax.stella.Absyn.LocalDecl visit(org.syntax.stella.Absyn.ALocalDecl p, A arg)
@@ -202,6 +213,19 @@ public class ComposVisitor<A> implements
     public org.syntax.stella.Absyn.Type visit(org.syntax.stella.Absyn.TypeUnit p, A arg)
     {
       return new org.syntax.stella.Absyn.TypeUnit();
+    }
+    public org.syntax.stella.Absyn.Type visit(org.syntax.stella.Absyn.TypeTop p, A arg)
+    {
+      return new org.syntax.stella.Absyn.TypeTop();
+    }
+    public org.syntax.stella.Absyn.Type visit(org.syntax.stella.Absyn.TypeBottom p, A arg)
+    {
+      return new org.syntax.stella.Absyn.TypeBottom();
+    }
+    public org.syntax.stella.Absyn.Type visit(org.syntax.stella.Absyn.TypeRef p, A arg)
+    {
+      org.syntax.stella.Absyn.Type type_ = p.type_.accept(this, arg);
+      return new org.syntax.stella.Absyn.TypeRef(type_);
     }
     public org.syntax.stella.Absyn.Type visit(org.syntax.stella.Absyn.TypeVar p, A arg)
     {
@@ -351,13 +375,6 @@ public class ComposVisitor<A> implements
       org.syntax.stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
       return new org.syntax.stella.Absyn.Sequence(expr_1, expr_2);
     }
-    public org.syntax.stella.Absyn.Expr visit(org.syntax.stella.Absyn.If p, A arg)
-    {
-      org.syntax.stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
-      org.syntax.stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
-      org.syntax.stella.Absyn.Expr expr_3 = p.expr_3.accept(this, arg);
-      return new org.syntax.stella.Absyn.If(expr_1, expr_2, expr_3);
-    }
     public org.syntax.stella.Absyn.Expr visit(org.syntax.stella.Absyn.Let p, A arg)
     {
       org.syntax.stella.Absyn.ListPatternBinding listpatternbinding_ = new org.syntax.stella.Absyn.ListPatternBinding();
@@ -377,6 +394,19 @@ public class ComposVisitor<A> implements
       }
       org.syntax.stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
       return new org.syntax.stella.Absyn.LetRec(listpatternbinding_, expr_);
+    }
+    public org.syntax.stella.Absyn.Expr visit(org.syntax.stella.Absyn.Assign p, A arg)
+    {
+      org.syntax.stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
+      org.syntax.stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
+      return new org.syntax.stella.Absyn.Assign(expr_1, expr_2);
+    }
+    public org.syntax.stella.Absyn.Expr visit(org.syntax.stella.Absyn.If p, A arg)
+    {
+      org.syntax.stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
+      org.syntax.stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
+      org.syntax.stella.Absyn.Expr expr_3 = p.expr_3.accept(this, arg);
+      return new org.syntax.stella.Absyn.If(expr_1, expr_2, expr_3);
     }
     public org.syntax.stella.Absyn.Expr visit(org.syntax.stella.Absyn.LessThan p, A arg)
     {
@@ -419,6 +449,12 @@ public class ComposVisitor<A> implements
       org.syntax.stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
       org.syntax.stella.Absyn.Type type_ = p.type_.accept(this, arg);
       return new org.syntax.stella.Absyn.TypeAsc(expr_, type_);
+    }
+    public org.syntax.stella.Absyn.Expr visit(org.syntax.stella.Absyn.TypeCast p, A arg)
+    {
+      org.syntax.stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      org.syntax.stella.Absyn.Type type_ = p.type_.accept(this, arg);
+      return new org.syntax.stella.Absyn.TypeCast(expr_, type_);
     }
     public org.syntax.stella.Absyn.Expr visit(org.syntax.stella.Absyn.Abstraction p, A arg)
     {
@@ -491,6 +527,16 @@ public class ComposVisitor<A> implements
       org.syntax.stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
       return new org.syntax.stella.Absyn.LogicAnd(expr_1, expr_2);
     }
+    public org.syntax.stella.Absyn.Expr visit(org.syntax.stella.Absyn.Ref p, A arg)
+    {
+      org.syntax.stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      return new org.syntax.stella.Absyn.Ref(expr_);
+    }
+    public org.syntax.stella.Absyn.Expr visit(org.syntax.stella.Absyn.Deref p, A arg)
+    {
+      org.syntax.stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      return new org.syntax.stella.Absyn.Deref(expr_);
+    }
     public org.syntax.stella.Absyn.Expr visit(org.syntax.stella.Absyn.Application p, A arg)
     {
       org.syntax.stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
@@ -551,6 +597,28 @@ public class ComposVisitor<A> implements
     {
       org.syntax.stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
       return new org.syntax.stella.Absyn.Tail(expr_);
+    }
+    public org.syntax.stella.Absyn.Expr visit(org.syntax.stella.Absyn.Panic p, A arg)
+    {
+      return new org.syntax.stella.Absyn.Panic();
+    }
+    public org.syntax.stella.Absyn.Expr visit(org.syntax.stella.Absyn.Throw p, A arg)
+    {
+      org.syntax.stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      return new org.syntax.stella.Absyn.Throw(expr_);
+    }
+    public org.syntax.stella.Absyn.Expr visit(org.syntax.stella.Absyn.TryCatch p, A arg)
+    {
+      org.syntax.stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
+      org.syntax.stella.Absyn.Pattern pattern_ = p.pattern_.accept(this, arg);
+      org.syntax.stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
+      return new org.syntax.stella.Absyn.TryCatch(expr_1, pattern_, expr_2);
+    }
+    public org.syntax.stella.Absyn.Expr visit(org.syntax.stella.Absyn.TryWith p, A arg)
+    {
+      org.syntax.stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
+      org.syntax.stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
+      return new org.syntax.stella.Absyn.TryWith(expr_1, expr_2);
     }
     public org.syntax.stella.Absyn.Expr visit(org.syntax.stella.Absyn.Inl p, A arg)
     {
@@ -622,6 +690,11 @@ public class ComposVisitor<A> implements
     {
       Integer integer_ = p.integer_;
       return new org.syntax.stella.Absyn.ConstInt(integer_);
+    }
+    public org.syntax.stella.Absyn.Expr visit(org.syntax.stella.Absyn.ConstMemory p, A arg)
+    {
+      String memoryaddress_ = p.memoryaddress_;
+      return new org.syntax.stella.Absyn.ConstMemory(memoryaddress_);
     }
     public org.syntax.stella.Absyn.Expr visit(org.syntax.stella.Absyn.Var p, A arg)
     {

@@ -1,3 +1,4 @@
+import org.syntax.stella.Absyn.Expr
 import org.syntax.stella.Absyn.Type
 import org.syntax.stella.PrettyPrinter
 import kotlin.system.exitProcess
@@ -76,6 +77,20 @@ class Output (assertExpression: Boolean){
         throw TypeException("TYPE ERROR\n " +
                 "in $s:\n " +
                 "Index [$index] is out of boundaries of the tuple")
+
+    }
+
+    fun ThrowNotImplementedError(expr: Expr) {
+        if (assertExpression) return;
+        throw TypeException("TYPE ERROR\n " +
+                expr.toString() + " is not implemented yet.")
+
+    }
+    fun ThrowFieldNotFoundEr(ident: String?, s: String){
+        if (assertExpression) return;
+        throw TypeException("TYPE ERROR\n " +
+                "in $s:\n " +
+                "Field $ident not found.")
 
     }
 }

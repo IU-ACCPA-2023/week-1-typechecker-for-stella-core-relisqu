@@ -65,21 +65,6 @@ public class PrettyPrinter
 
 
   //  print and show methods are defined for each category.
-  public static String print(org.syntax.stella.Absyn.ListStellaIdent foo)
-  {
-    pp(foo, 0);
-    trim();
-    String temp = buf_.toString();
-    buf_.delete(0,buf_.length());
-    return temp;
-  }
-  public static String show(org.syntax.stella.Absyn.ListStellaIdent foo)
-  {
-    sh(foo);
-    String temp = buf_.toString();
-    buf_.delete(0,buf_.length());
-    return temp;
-  }
   public static String print(org.syntax.stella.Absyn.Program foo)
   {
     pp(foo, 0);
@@ -89,6 +74,21 @@ public class PrettyPrinter
     return temp;
   }
   public static String show(org.syntax.stella.Absyn.Program foo)
+  {
+    sh(foo);
+    String temp = buf_.toString();
+    buf_.delete(0,buf_.length());
+    return temp;
+  }
+  public static String print(org.syntax.stella.Absyn.ListStellaIdent foo)
+  {
+    pp(foo, 0);
+    trim();
+    String temp = buf_.toString();
+    buf_.delete(0,buf_.length());
+    return temp;
+  }
+  public static String show(org.syntax.stella.Absyn.ListStellaIdent foo)
   {
     sh(foo);
     String temp = buf_.toString();
@@ -637,6 +637,20 @@ public class PrettyPrinter
   }
   /***   You shouldn't need to change anything beyond this point.   ***/
 
+  private static void pp(org.syntax.stella.Absyn.Program foo, int _i_)
+  {
+    if (foo instanceof org.syntax.stella.Absyn.AProgram)
+    {
+       org.syntax.stella.Absyn.AProgram _aprogram = (org.syntax.stella.Absyn.AProgram) foo;
+       if (_i_ > 0) render(_L_PAREN);
+       pp(_aprogram.languagedecl_, 0);
+       pp(_aprogram.listextension_, 0);
+       pp(_aprogram.listdecl_, 0);
+       if (_i_ > 0) render(_R_PAREN);
+    }
+
+  }
+
   private static void pp(org.syntax.stella.Absyn.ListStellaIdent foo, int _i_)
   {
     ppListStellaIdent(foo.iterator(), _i_);
@@ -658,20 +672,6 @@ public class PrettyPrinter
     }
   }
 
-
-  private static void pp(org.syntax.stella.Absyn.Program foo, int _i_)
-  {
-    if (foo instanceof org.syntax.stella.Absyn.AProgram)
-    {
-       org.syntax.stella.Absyn.AProgram _aprogram = (org.syntax.stella.Absyn.AProgram) foo;
-       if (_i_ > 0) render(_L_PAREN);
-       pp(_aprogram.languagedecl_, 0);
-       pp(_aprogram.listextension_, 0);
-       pp(_aprogram.listdecl_, 0);
-       if (_i_ > 0) render(_R_PAREN);
-    }
-
-  }
 
   private static void pp(org.syntax.stella.Absyn.LanguageDecl foo, int _i_)
   {
@@ -767,6 +767,27 @@ public class PrettyPrinter
        pp(_decltypealias.stellaident_, 0);
        render("=");
        pp(_decltypealias.type_, 0);
+       if (_i_ > 0) render(_R_PAREN);
+    }
+    else     if (foo instanceof org.syntax.stella.Absyn.DeclExceptionType)
+    {
+       org.syntax.stella.Absyn.DeclExceptionType _declexceptiontype = (org.syntax.stella.Absyn.DeclExceptionType) foo;
+       if (_i_ > 0) render(_L_PAREN);
+       render("exception");
+       render("type");
+       render("=");
+       pp(_declexceptiontype.type_, 0);
+       if (_i_ > 0) render(_R_PAREN);
+    }
+    else     if (foo instanceof org.syntax.stella.Absyn.DeclExceptionVariant)
+    {
+       org.syntax.stella.Absyn.DeclExceptionVariant _declexceptionvariant = (org.syntax.stella.Absyn.DeclExceptionVariant) foo;
+       if (_i_ > 0) render(_L_PAREN);
+       render("exception");
+       render("variant");
+       pp(_declexceptionvariant.stellaident_, 0);
+       render(":");
+       pp(_declexceptionvariant.type_, 0);
        if (_i_ > 0) render(_R_PAREN);
     }
 
@@ -1003,6 +1024,28 @@ public class PrettyPrinter
        org.syntax.stella.Absyn.TypeUnit _typeunit = (org.syntax.stella.Absyn.TypeUnit) foo;
        if (_i_ > 3) render(_L_PAREN);
        render("Unit");
+       if (_i_ > 3) render(_R_PAREN);
+    }
+    else     if (foo instanceof org.syntax.stella.Absyn.TypeTop)
+    {
+       org.syntax.stella.Absyn.TypeTop _typetop = (org.syntax.stella.Absyn.TypeTop) foo;
+       if (_i_ > 3) render(_L_PAREN);
+       render("Top");
+       if (_i_ > 3) render(_R_PAREN);
+    }
+    else     if (foo instanceof org.syntax.stella.Absyn.TypeBottom)
+    {
+       org.syntax.stella.Absyn.TypeBottom _typebottom = (org.syntax.stella.Absyn.TypeBottom) foo;
+       if (_i_ > 3) render(_L_PAREN);
+       render("Bot");
+       if (_i_ > 3) render(_R_PAREN);
+    }
+    else     if (foo instanceof org.syntax.stella.Absyn.TypeRef)
+    {
+       org.syntax.stella.Absyn.TypeRef _typeref = (org.syntax.stella.Absyn.TypeRef) foo;
+       if (_i_ > 3) render(_L_PAREN);
+       render("&");
+       pp(_typeref.type_, 2);
        if (_i_ > 3) render(_R_PAREN);
     }
     else     if (foo instanceof org.syntax.stella.Absyn.TypeVar)
@@ -1361,6 +1404,35 @@ public class PrettyPrinter
        pp(_sequence.expr_2, 0);
        if (_i_ > 0) render(_R_PAREN);
     }
+    else     if (foo instanceof org.syntax.stella.Absyn.Let)
+    {
+       org.syntax.stella.Absyn.Let _let = (org.syntax.stella.Absyn.Let) foo;
+       if (_i_ > 0) render(_L_PAREN);
+       render("let");
+       pp(_let.listpatternbinding_, 0);
+       render("in");
+       pp(_let.expr_, 0);
+       if (_i_ > 0) render(_R_PAREN);
+    }
+    else     if (foo instanceof org.syntax.stella.Absyn.LetRec)
+    {
+       org.syntax.stella.Absyn.LetRec _letrec = (org.syntax.stella.Absyn.LetRec) foo;
+       if (_i_ > 0) render(_L_PAREN);
+       render("letrec");
+       pp(_letrec.listpatternbinding_, 0);
+       render("in");
+       pp(_letrec.expr_, 0);
+       if (_i_ > 0) render(_R_PAREN);
+    }
+    else     if (foo instanceof org.syntax.stella.Absyn.Assign)
+    {
+       org.syntax.stella.Absyn.Assign _assign = (org.syntax.stella.Absyn.Assign) foo;
+       if (_i_ > 1) render(_L_PAREN);
+       pp(_assign.expr_1, 2);
+       render(":=");
+       pp(_assign.expr_2, 1);
+       if (_i_ > 1) render(_R_PAREN);
+    }
     else     if (foo instanceof org.syntax.stella.Absyn.If)
     {
        org.syntax.stella.Absyn.If _if = (org.syntax.stella.Absyn.If) foo;
@@ -1371,26 +1443,6 @@ public class PrettyPrinter
        pp(_if.expr_2, 1);
        render("else");
        pp(_if.expr_3, 1);
-       if (_i_ > 1) render(_R_PAREN);
-    }
-    else     if (foo instanceof org.syntax.stella.Absyn.Let)
-    {
-       org.syntax.stella.Absyn.Let _let = (org.syntax.stella.Absyn.Let) foo;
-       if (_i_ > 1) render(_L_PAREN);
-       render("let");
-       pp(_let.listpatternbinding_, 0);
-       render("in");
-       pp(_let.expr_, 1);
-       if (_i_ > 1) render(_R_PAREN);
-    }
-    else     if (foo instanceof org.syntax.stella.Absyn.LetRec)
-    {
-       org.syntax.stella.Absyn.LetRec _letrec = (org.syntax.stella.Absyn.LetRec) foo;
-       if (_i_ > 1) render(_L_PAREN);
-       render("letrec");
-       pp(_letrec.listpatternbinding_, 0);
-       render("in");
-       pp(_letrec.expr_, 1);
        if (_i_ > 1) render(_R_PAREN);
     }
     else     if (foo instanceof org.syntax.stella.Absyn.LessThan)
@@ -1454,6 +1506,16 @@ public class PrettyPrinter
        pp(_typeasc.expr_, 3);
        render("as");
        pp(_typeasc.type_, 2);
+       if (_i_ > 3) render(_R_PAREN);
+    }
+    else     if (foo instanceof org.syntax.stella.Absyn.TypeCast)
+    {
+       org.syntax.stella.Absyn.TypeCast _typecast = (org.syntax.stella.Absyn.TypeCast) foo;
+       if (_i_ > 3) render(_L_PAREN);
+       pp(_typecast.expr_, 3);
+       render("cast");
+       render("as");
+       pp(_typecast.type_, 2);
        if (_i_ > 3) render(_R_PAREN);
     }
     else     if (foo instanceof org.syntax.stella.Absyn.Abstraction)
@@ -1554,6 +1616,24 @@ public class PrettyPrinter
        pp(_logicand.expr_2, 5);
        if (_i_ > 4) render(_R_PAREN);
     }
+    else     if (foo instanceof org.syntax.stella.Absyn.Ref)
+    {
+       org.syntax.stella.Absyn.Ref _ref = (org.syntax.stella.Absyn.Ref) foo;
+       if (_i_ > 5) render(_L_PAREN);
+       render("new");
+       render("(");
+       pp(_ref.expr_, 5);
+       render(")");
+       if (_i_ > 5) render(_R_PAREN);
+    }
+    else     if (foo instanceof org.syntax.stella.Absyn.Deref)
+    {
+       org.syntax.stella.Absyn.Deref _deref = (org.syntax.stella.Absyn.Deref) foo;
+       if (_i_ > 5) render(_L_PAREN);
+       render("*");
+       pp(_deref.expr_, 5);
+       if (_i_ > 5) render(_R_PAREN);
+    }
     else     if (foo instanceof org.syntax.stella.Absyn.Application)
     {
        org.syntax.stella.Absyn.Application _application = (org.syntax.stella.Absyn.Application) foo;
@@ -1640,6 +1720,53 @@ public class PrettyPrinter
        render("(");
        pp(_tail.expr_, 0);
        render(")");
+       if (_i_ > 6) render(_R_PAREN);
+    }
+    else     if (foo instanceof org.syntax.stella.Absyn.Panic)
+    {
+       org.syntax.stella.Absyn.Panic _panic = (org.syntax.stella.Absyn.Panic) foo;
+       if (_i_ > 6) render(_L_PAREN);
+       render("panic!");
+       if (_i_ > 6) render(_R_PAREN);
+    }
+    else     if (foo instanceof org.syntax.stella.Absyn.Throw)
+    {
+       org.syntax.stella.Absyn.Throw _throw = (org.syntax.stella.Absyn.Throw) foo;
+       if (_i_ > 6) render(_L_PAREN);
+       render("throw");
+       render("(");
+       pp(_throw.expr_, 0);
+       render(")");
+       if (_i_ > 6) render(_R_PAREN);
+    }
+    else     if (foo instanceof org.syntax.stella.Absyn.TryCatch)
+    {
+       org.syntax.stella.Absyn.TryCatch _trycatch = (org.syntax.stella.Absyn.TryCatch) foo;
+       if (_i_ > 6) render(_L_PAREN);
+       render("try");
+       render("{");
+       pp(_trycatch.expr_1, 0);
+       render("}");
+       render("catch");
+       render("{");
+       pp(_trycatch.pattern_, 0);
+       render("=>");
+       pp(_trycatch.expr_2, 0);
+       render("}");
+       if (_i_ > 6) render(_R_PAREN);
+    }
+    else     if (foo instanceof org.syntax.stella.Absyn.TryWith)
+    {
+       org.syntax.stella.Absyn.TryWith _trywith = (org.syntax.stella.Absyn.TryWith) foo;
+       if (_i_ > 6) render(_L_PAREN);
+       render("try");
+       render("{");
+       pp(_trywith.expr_1, 0);
+       render("}");
+       render("with");
+       render("{");
+       pp(_trywith.expr_2, 0);
+       render("}");
        if (_i_ > 6) render(_R_PAREN);
     }
     else     if (foo instanceof org.syntax.stella.Absyn.Inl)
@@ -1774,6 +1901,13 @@ public class PrettyPrinter
        org.syntax.stella.Absyn.ConstInt _constint = (org.syntax.stella.Absyn.ConstInt) foo;
        if (_i_ > 7) render(_L_PAREN);
        pp(_constint.integer_, 0);
+       if (_i_ > 7) render(_R_PAREN);
+    }
+    else     if (foo instanceof org.syntax.stella.Absyn.ConstMemory)
+    {
+       org.syntax.stella.Absyn.ConstMemory _constmemory = (org.syntax.stella.Absyn.ConstMemory) foo;
+       if (_i_ > 7) render(_L_PAREN);
+       pp(_constmemory.memoryaddress_, 0);
        if (_i_ > 7) render(_R_PAREN);
     }
     else     if (foo instanceof org.syntax.stella.Absyn.Var)
@@ -1938,16 +2072,6 @@ public class PrettyPrinter
   }
 
 
-  private static void sh(org.syntax.stella.Absyn.ListStellaIdent foo)
-  {
-     for (java.util.Iterator<String> it = foo.iterator(); it.hasNext();)
-     {
-       sh(it.next());
-       if (it.hasNext())
-         render(",");
-     }
-  }
-
   private static void sh(org.syntax.stella.Absyn.Program foo)
   {
     if (foo instanceof org.syntax.stella.Absyn.AProgram)
@@ -1964,6 +2088,16 @@ public class PrettyPrinter
        render("]");
        render(")");
     }
+  }
+
+  private static void sh(org.syntax.stella.Absyn.ListStellaIdent foo)
+  {
+     for (java.util.Iterator<String> it = foo.iterator(); it.hasNext();)
+     {
+       sh(it.next());
+       if (it.hasNext())
+         render(",");
+     }
   }
 
   private static void sh(org.syntax.stella.Absyn.LanguageDecl foo)
@@ -2038,6 +2172,23 @@ public class PrettyPrinter
        render("DeclTypeAlias");
        sh(_decltypealias.stellaident_);
        sh(_decltypealias.type_);
+       render(")");
+    }
+    if (foo instanceof org.syntax.stella.Absyn.DeclExceptionType)
+    {
+       org.syntax.stella.Absyn.DeclExceptionType _declexceptiontype = (org.syntax.stella.Absyn.DeclExceptionType) foo;
+       render("(");
+       render("DeclExceptionType");
+       sh(_declexceptiontype.type_);
+       render(")");
+    }
+    if (foo instanceof org.syntax.stella.Absyn.DeclExceptionVariant)
+    {
+       org.syntax.stella.Absyn.DeclExceptionVariant _declexceptionvariant = (org.syntax.stella.Absyn.DeclExceptionVariant) foo;
+       render("(");
+       render("DeclExceptionVariant");
+       sh(_declexceptionvariant.stellaident_);
+       sh(_declexceptionvariant.type_);
        render(")");
     }
   }
@@ -2235,6 +2386,24 @@ public class PrettyPrinter
     {
        org.syntax.stella.Absyn.TypeUnit _typeunit = (org.syntax.stella.Absyn.TypeUnit) foo;
        render("TypeUnit");
+    }
+    if (foo instanceof org.syntax.stella.Absyn.TypeTop)
+    {
+       org.syntax.stella.Absyn.TypeTop _typetop = (org.syntax.stella.Absyn.TypeTop) foo;
+       render("TypeTop");
+    }
+    if (foo instanceof org.syntax.stella.Absyn.TypeBottom)
+    {
+       org.syntax.stella.Absyn.TypeBottom _typebottom = (org.syntax.stella.Absyn.TypeBottom) foo;
+       render("TypeBottom");
+    }
+    if (foo instanceof org.syntax.stella.Absyn.TypeRef)
+    {
+       org.syntax.stella.Absyn.TypeRef _typeref = (org.syntax.stella.Absyn.TypeRef) foo;
+       render("(");
+       render("TypeRef");
+       sh(_typeref.type_);
+       render(")");
     }
     if (foo instanceof org.syntax.stella.Absyn.TypeVar)
     {
@@ -2504,16 +2673,6 @@ public class PrettyPrinter
        sh(_sequence.expr_2);
        render(")");
     }
-    if (foo instanceof org.syntax.stella.Absyn.If)
-    {
-       org.syntax.stella.Absyn.If _if = (org.syntax.stella.Absyn.If) foo;
-       render("(");
-       render("If");
-       sh(_if.expr_1);
-       sh(_if.expr_2);
-       sh(_if.expr_3);
-       render(")");
-    }
     if (foo instanceof org.syntax.stella.Absyn.Let)
     {
        org.syntax.stella.Absyn.Let _let = (org.syntax.stella.Absyn.Let) foo;
@@ -2534,6 +2693,25 @@ public class PrettyPrinter
        sh(_letrec.listpatternbinding_);
        render("]");
        sh(_letrec.expr_);
+       render(")");
+    }
+    if (foo instanceof org.syntax.stella.Absyn.Assign)
+    {
+       org.syntax.stella.Absyn.Assign _assign = (org.syntax.stella.Absyn.Assign) foo;
+       render("(");
+       render("Assign");
+       sh(_assign.expr_1);
+       sh(_assign.expr_2);
+       render(")");
+    }
+    if (foo instanceof org.syntax.stella.Absyn.If)
+    {
+       org.syntax.stella.Absyn.If _if = (org.syntax.stella.Absyn.If) foo;
+       render("(");
+       render("If");
+       sh(_if.expr_1);
+       sh(_if.expr_2);
+       sh(_if.expr_3);
        render(")");
     }
     if (foo instanceof org.syntax.stella.Absyn.LessThan)
@@ -2597,6 +2775,15 @@ public class PrettyPrinter
        render("TypeAsc");
        sh(_typeasc.expr_);
        sh(_typeasc.type_);
+       render(")");
+    }
+    if (foo instanceof org.syntax.stella.Absyn.TypeCast)
+    {
+       org.syntax.stella.Absyn.TypeCast _typecast = (org.syntax.stella.Absyn.TypeCast) foo;
+       render("(");
+       render("TypeCast");
+       sh(_typecast.expr_);
+       sh(_typecast.type_);
        render(")");
     }
     if (foo instanceof org.syntax.stella.Absyn.Abstraction)
@@ -2694,6 +2881,22 @@ public class PrettyPrinter
        sh(_logicand.expr_2);
        render(")");
     }
+    if (foo instanceof org.syntax.stella.Absyn.Ref)
+    {
+       org.syntax.stella.Absyn.Ref _ref = (org.syntax.stella.Absyn.Ref) foo;
+       render("(");
+       render("Ref");
+       sh(_ref.expr_);
+       render(")");
+    }
+    if (foo instanceof org.syntax.stella.Absyn.Deref)
+    {
+       org.syntax.stella.Absyn.Deref _deref = (org.syntax.stella.Absyn.Deref) foo;
+       render("(");
+       render("Deref");
+       sh(_deref.expr_);
+       render(")");
+    }
     if (foo instanceof org.syntax.stella.Absyn.Application)
     {
        org.syntax.stella.Absyn.Application _application = (org.syntax.stella.Absyn.Application) foo;
@@ -2774,6 +2977,38 @@ public class PrettyPrinter
        render("(");
        render("Tail");
        sh(_tail.expr_);
+       render(")");
+    }
+    if (foo instanceof org.syntax.stella.Absyn.Panic)
+    {
+       org.syntax.stella.Absyn.Panic _panic = (org.syntax.stella.Absyn.Panic) foo;
+       render("Panic");
+    }
+    if (foo instanceof org.syntax.stella.Absyn.Throw)
+    {
+       org.syntax.stella.Absyn.Throw _throw = (org.syntax.stella.Absyn.Throw) foo;
+       render("(");
+       render("Throw");
+       sh(_throw.expr_);
+       render(")");
+    }
+    if (foo instanceof org.syntax.stella.Absyn.TryCatch)
+    {
+       org.syntax.stella.Absyn.TryCatch _trycatch = (org.syntax.stella.Absyn.TryCatch) foo;
+       render("(");
+       render("TryCatch");
+       sh(_trycatch.expr_1);
+       sh(_trycatch.pattern_);
+       sh(_trycatch.expr_2);
+       render(")");
+    }
+    if (foo instanceof org.syntax.stella.Absyn.TryWith)
+    {
+       org.syntax.stella.Absyn.TryWith _trywith = (org.syntax.stella.Absyn.TryWith) foo;
+       render("(");
+       render("TryWith");
+       sh(_trywith.expr_1);
+       sh(_trywith.expr_2);
        render(")");
     }
     if (foo instanceof org.syntax.stella.Absyn.Inl)
@@ -2881,6 +3116,14 @@ public class PrettyPrinter
        render("(");
        render("ConstInt");
        sh(_constint.integer_);
+       render(")");
+    }
+    if (foo instanceof org.syntax.stella.Absyn.ConstMemory)
+    {
+       org.syntax.stella.Absyn.ConstMemory _constmemory = (org.syntax.stella.Absyn.ConstMemory) foo;
+       render("(");
+       render("ConstMemory");
+       sh(_constmemory.memoryaddress_);
        render(")");
     }
     if (foo instanceof org.syntax.stella.Absyn.Var)

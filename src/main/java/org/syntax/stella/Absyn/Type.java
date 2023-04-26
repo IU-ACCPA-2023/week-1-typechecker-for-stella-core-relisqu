@@ -15,6 +15,9 @@ public abstract class Type implements java.io.Serializable {
     public R visit(org.syntax.stella.Absyn.TypeBool p, A arg);
     public R visit(org.syntax.stella.Absyn.TypeNat p, A arg);
     public R visit(org.syntax.stella.Absyn.TypeUnit p, A arg);
+    public R visit(org.syntax.stella.Absyn.TypeTop p, A arg);
+    public R visit(org.syntax.stella.Absyn.TypeBottom p, A arg);
+    public R visit(org.syntax.stella.Absyn.TypeRef p, A arg);
     public R visit(org.syntax.stella.Absyn.TypeVar p, A arg);
 
   }

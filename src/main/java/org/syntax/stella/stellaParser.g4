@@ -8,12 +8,12 @@ options {
 }
 
 
-start_ListStellaIdent returns [ org.syntax.stella.Absyn.ListStellaIdent result ]
-  : x=listStellaIdent EOF
-    { $result = $x.result; }
-  ;
 start_Program returns [ org.syntax.stella.Absyn.Program result ]
   : x=program EOF
+    { $result = $x.result; }
+  ;
+start_ListStellaIdent returns [ org.syntax.stella.Absyn.ListStellaIdent result ]
+  : x=listStellaIdent EOF
     { $result = $x.result; }
   ;
 start_LanguageDecl returns [ org.syntax.stella.Absyn.LanguageDecl result ]
@@ -160,6 +160,10 @@ start_Expr4 returns [ org.syntax.stella.Absyn.Expr result ]
   : x=expr4 EOF
     { $result = $x.result; }
   ;
+start_Expr5 returns [ org.syntax.stella.Absyn.Expr result ]
+  : x=expr5 EOF
+    { $result = $x.result; }
+  ;
 start_Expr6 returns [ org.syntax.stella.Absyn.Expr result ]
   : x=expr6 EOF
     { $result = $x.result; }
@@ -188,10 +192,6 @@ start_ListType returns [ org.syntax.stella.Absyn.ListType result ]
   : x=listType EOF
     { $result = $x.result; }
   ;
-start_Expr5 returns [ org.syntax.stella.Absyn.Expr result ]
-  : x=expr5 EOF
-    { $result = $x.result; }
-  ;
 start_VariantFieldType returns [ org.syntax.stella.Absyn.VariantFieldType result ]
   : x=variantFieldType EOF
     { $result = $x.result; }
@@ -213,6 +213,10 @@ start_Typing returns [ org.syntax.stella.Absyn.Typing result ]
     { $result = $x.result; }
   ;
 
+program returns [ org.syntax.stella.Absyn.Program result ]
+  : p_1_1=languageDecl p_1_2=listExtension p_1_3=listDecl
+    { $result = new org.syntax.stella.Absyn.AProgram($p_1_1.result,$p_1_2.result,$p_1_3.result); }
+  ;
 listStellaIdent returns [ org.syntax.stella.Absyn.ListStellaIdent result ]
   :  /* empty */
     { $result = new org.syntax.stella.Absyn.ListStellaIdent(); }
@@ -221,16 +225,12 @@ listStellaIdent returns [ org.syntax.stella.Absyn.ListStellaIdent result ]
   | p_3_1=StellaIdent Surrogate_id_SYMB_0 p_3_3=listStellaIdent
     { $result = $p_3_3.result; $result.addFirst($p_3_1.getText()); }
   ;
-program returns [ org.syntax.stella.Absyn.Program result ]
-  : p_1_1=languageDecl p_1_2=listExtension p_1_3=listDecl
-    { $result = new org.syntax.stella.Absyn.AProgram($p_1_1.result,$p_1_2.result,$p_1_3.result); }
-  ;
 languageDecl returns [ org.syntax.stella.Absyn.LanguageDecl result ]
-  : Surrogate_id_SYMB_50 Surrogate_id_SYMB_38 Surrogate_id_SYMB_1
+  : Surrogate_id_SYMB_58 Surrogate_id_SYMB_45 Surrogate_id_SYMB_1
     { $result = new org.syntax.stella.Absyn.LanguageCore(); }
   ;
 extension returns [ org.syntax.stella.Absyn.Extension result ]
-  : Surrogate_id_SYMB_40 Surrogate_id_SYMB_64 p_1_3=listExtensionName
+  : Surrogate_id_SYMB_48 Surrogate_id_SYMB_76 p_1_3=listExtensionName
     { $result = new org.syntax.stella.Absyn.AnExtension($p_1_3.result); }
   ;
 listExtensionName returns [ org.syntax.stella.Absyn.ListExtensionName result ]
@@ -248,10 +248,14 @@ listExtension returns [ org.syntax.stella.Absyn.ListExtension result ]
     { $result = $p_2_1.result; $result.addLast($p_2_2.result); }
   ;
 decl returns [ org.syntax.stella.Absyn.Decl result ]
-  : p_1_1=listAnnotation Surrogate_id_SYMB_43 p_1_3=StellaIdent Surrogate_id_SYMB_2 p_1_5=listParamDecl Surrogate_id_SYMB_3 p_1_7=returnType p_1_8=throwType Surrogate_id_SYMB_4 p_1_10=listDecl Surrogate_id_SYMB_56 p_1_12=expr Surrogate_id_SYMB_5
+  : p_1_1=listAnnotation Surrogate_id_SYMB_51 p_1_3=StellaIdent Surrogate_id_SYMB_2 p_1_5=listParamDecl Surrogate_id_SYMB_3 p_1_7=returnType p_1_8=throwType Surrogate_id_SYMB_4 p_1_10=listDecl Surrogate_id_SYMB_65 p_1_12=expr Surrogate_id_SYMB_5
     { $result = new org.syntax.stella.Absyn.DeclFun($p_1_1.result,$p_1_3.getText(),$p_1_5.result,$p_1_7.result,$p_1_8.result,$p_1_10.result,$p_1_12.result); }
-  | Surrogate_id_SYMB_61 p_2_2=StellaIdent Surrogate_id_SYMB_6 p_2_4=type
+  | Surrogate_id_SYMB_72 p_2_2=StellaIdent Surrogate_id_SYMB_6 p_2_4=type
     { $result = new org.syntax.stella.Absyn.DeclTypeAlias($p_2_2.getText(),$p_2_4.result); }
+  | Surrogate_id_SYMB_47 Surrogate_id_SYMB_72 Surrogate_id_SYMB_6 p_3_4=type
+    { $result = new org.syntax.stella.Absyn.DeclExceptionType($p_3_4.result); }
+  | Surrogate_id_SYMB_47 Surrogate_id_SYMB_75 p_4_3=StellaIdent Surrogate_id_SYMB_7 p_4_5=type
+    { $result = new org.syntax.stella.Absyn.DeclExceptionVariant($p_4_3.getText(),$p_4_5.result); }
   ;
 listDecl returns [ org.syntax.stella.Absyn.ListDecl result ]
   :  /* empty */
@@ -270,7 +274,7 @@ listLocalDecl returns [ org.syntax.stella.Absyn.ListLocalDecl result ]
     { $result = $p_2_1.result; $result.addLast($p_2_2.result); }
   ;
 annotation returns [ org.syntax.stella.Absyn.Annotation result ]
-  : Surrogate_id_SYMB_48
+  : Surrogate_id_SYMB_56
     { $result = new org.syntax.stella.Absyn.InlineAnnotation(); }
   ;
 listAnnotation returns [ org.syntax.stella.Absyn.ListAnnotation result ]
@@ -300,7 +304,7 @@ returnType returns [ org.syntax.stella.Absyn.ReturnType result ]
 throwType returns [ org.syntax.stella.Absyn.ThrowType result ]
   :  /* empty */
     { $result = new org.syntax.stella.Absyn.NoThrowType(); }
-  | Surrogate_id_SYMB_59 p_2_2=listType9
+  | Surrogate_id_SYMB_69 p_2_2=listType9
     { $result = new org.syntax.stella.Absyn.SomeThrowType($p_2_2.result); }
   ;
 type9 returns [ org.syntax.stella.Absyn.Type result ]
@@ -346,9 +350,9 @@ exprData returns [ org.syntax.stella.Absyn.ExprData result ]
 pattern returns [ org.syntax.stella.Absyn.Pattern result ]
   : Surrogate_id_SYMB_11 p_1_2=StellaIdent p_1_3=patternData Surrogate_id_SYMB_12
     { $result = new org.syntax.stella.Absyn.PatternVariant($p_1_2.getText(),$p_1_3.result); }
-  | Surrogate_id_SYMB_47 Surrogate_id_SYMB_2 p_2_3=pattern Surrogate_id_SYMB_3
+  | Surrogate_id_SYMB_55 Surrogate_id_SYMB_2 p_2_3=pattern Surrogate_id_SYMB_3
     { $result = new org.syntax.stella.Absyn.PatternInl($p_2_3.result); }
-  | Surrogate_id_SYMB_49 Surrogate_id_SYMB_2 p_3_3=pattern Surrogate_id_SYMB_3
+  | Surrogate_id_SYMB_57 Surrogate_id_SYMB_2 p_3_3=pattern Surrogate_id_SYMB_3
     { $result = new org.syntax.stella.Absyn.PatternInr($p_3_3.result); }
   | Surrogate_id_SYMB_4 p_4_2=listPattern Surrogate_id_SYMB_5
     { $result = new org.syntax.stella.Absyn.PatternTuple($p_4_2.result); }
@@ -358,15 +362,15 @@ pattern returns [ org.syntax.stella.Absyn.Pattern result ]
     { $result = new org.syntax.stella.Absyn.PatternList($p_6_2.result); }
   | Surrogate_id_SYMB_2 p_7_2=pattern Surrogate_id_SYMB_0 p_7_4=pattern Surrogate_id_SYMB_3
     { $result = new org.syntax.stella.Absyn.PatternCons($p_7_2.result,$p_7_4.result); }
-  | Surrogate_id_SYMB_41
+  | Surrogate_id_SYMB_49
     { $result = new org.syntax.stella.Absyn.PatternFalse(); }
-  | Surrogate_id_SYMB_60
+  | Surrogate_id_SYMB_70
     { $result = new org.syntax.stella.Absyn.PatternTrue(); }
-  | Surrogate_id_SYMB_63
+  | Surrogate_id_SYMB_74
     { $result = new org.syntax.stella.Absyn.PatternUnit(); }
   | p_11_1=INTEGER
     { $result = new org.syntax.stella.Absyn.PatternInt(Integer.parseInt($p_11_1.getText())); }
-  | Surrogate_id_SYMB_57 Surrogate_id_SYMB_2 p_12_3=pattern Surrogate_id_SYMB_3
+  | Surrogate_id_SYMB_66 Surrogate_id_SYMB_2 p_12_3=pattern Surrogate_id_SYMB_3
     { $result = new org.syntax.stella.Absyn.PatternSucc($p_12_3.result); }
   | p_13_1=StellaIdent
     { $result = new org.syntax.stella.Absyn.PatternVar($p_13_1.getText()); }
@@ -406,8 +410,12 @@ expr returns [ org.syntax.stella.Absyn.Expr result ]
     { $result = new org.syntax.stella.Absyn.Sequence($p_1_1.result,$p_1_3.result); }
   | p_2_1=expr1 Surrogate_id_SYMB_1
     { $result = $p_2_1.result; }
-  | p_3_1=expr1
-    { $result = $p_3_1.result; }
+  | Surrogate_id_SYMB_59 p_3_2=listPatternBinding Surrogate_id_SYMB_54 p_3_4=expr
+    { $result = new org.syntax.stella.Absyn.Let($p_3_2.result,$p_3_4.result); }
+  | Surrogate_id_SYMB_60 p_4_2=listPatternBinding Surrogate_id_SYMB_54 p_4_4=expr
+    { $result = new org.syntax.stella.Absyn.LetRec($p_4_2.result,$p_4_4.result); }
+  | p_5_1=expr1
+    { $result = $p_5_1.result; }
   ;
 listExpr returns [ org.syntax.stella.Absyn.ListExpr result ]
   :  /* empty */
@@ -418,14 +426,12 @@ listExpr returns [ org.syntax.stella.Absyn.ListExpr result ]
     { $result = $p_3_3.result; $result.addFirst($p_3_1.result); }
   ;
 expr1 returns [ org.syntax.stella.Absyn.Expr result ]
-  : Surrogate_id_SYMB_45 p_1_2=expr1 Surrogate_id_SYMB_58 p_1_4=expr1 Surrogate_id_SYMB_39 p_1_6=expr1
-    { $result = new org.syntax.stella.Absyn.If($p_1_2.result,$p_1_4.result,$p_1_6.result); }
-  | Surrogate_id_SYMB_51 p_2_2=listPatternBinding Surrogate_id_SYMB_46 p_2_4=expr1
-    { $result = new org.syntax.stella.Absyn.Let($p_2_2.result,$p_2_4.result); }
-  | Surrogate_id_SYMB_52 p_3_2=listPatternBinding Surrogate_id_SYMB_46 p_3_4=expr1
-    { $result = new org.syntax.stella.Absyn.LetRec($p_3_2.result,$p_3_4.result); }
-  | p_4_1=expr2
-    { $result = $p_4_1.result; }
+  : p_1_1=expr2 Surrogate_id_SYMB_15 p_1_3=expr1
+    { $result = new org.syntax.stella.Absyn.Assign($p_1_1.result,$p_1_3.result); }
+  | Surrogate_id_SYMB_53 p_2_2=expr1 Surrogate_id_SYMB_67 p_2_4=expr1 Surrogate_id_SYMB_46 p_2_6=expr1
+    { $result = new org.syntax.stella.Absyn.If($p_2_2.result,$p_2_4.result,$p_2_6.result); }
+  | p_3_1=expr2
+    { $result = $p_3_1.result; }
   ;
 patternBinding returns [ org.syntax.stella.Absyn.PatternBinding result ]
   : p_1_1=pattern Surrogate_id_SYMB_6 p_1_3=expr
@@ -438,17 +444,17 @@ listPatternBinding returns [ org.syntax.stella.Absyn.ListPatternBinding result ]
     { $result = $p_2_3.result; $result.addFirst($p_2_1.result); }
   ;
 expr2 returns [ org.syntax.stella.Absyn.Expr result ]
-  : p_1_1=expr3 Surrogate_id_SYMB_15 p_1_3=expr3
+  : p_1_1=expr3 Surrogate_id_SYMB_16 p_1_3=expr3
     { $result = new org.syntax.stella.Absyn.LessThan($p_1_1.result,$p_1_3.result); }
-  | p_2_1=expr3 Surrogate_id_SYMB_16 p_2_3=expr3
+  | p_2_1=expr3 Surrogate_id_SYMB_17 p_2_3=expr3
     { $result = new org.syntax.stella.Absyn.LessThanOrEqual($p_2_1.result,$p_2_3.result); }
-  | p_3_1=expr3 Surrogate_id_SYMB_17 p_3_3=expr3
+  | p_3_1=expr3 Surrogate_id_SYMB_18 p_3_3=expr3
     { $result = new org.syntax.stella.Absyn.GreaterThan($p_3_1.result,$p_3_3.result); }
-  | p_4_1=expr3 Surrogate_id_SYMB_18 p_4_3=expr3
+  | p_4_1=expr3 Surrogate_id_SYMB_19 p_4_3=expr3
     { $result = new org.syntax.stella.Absyn.GreaterThanOrEqual($p_4_1.result,$p_4_3.result); }
-  | p_5_1=expr3 Surrogate_id_SYMB_19 p_5_3=expr3
+  | p_5_1=expr3 Surrogate_id_SYMB_20 p_5_3=expr3
     { $result = new org.syntax.stella.Absyn.Equal($p_5_1.result,$p_5_3.result); }
-  | p_6_1=expr3 Surrogate_id_SYMB_20 p_6_3=expr3
+  | p_6_1=expr3 Surrogate_id_SYMB_21 p_6_3=expr3
     { $result = new org.syntax.stella.Absyn.NotEqual($p_6_1.result,$p_6_3.result); }
   | p_7_1=expr3
     { $result = $p_7_1.result; }
@@ -460,101 +466,121 @@ listExpr2 returns [ org.syntax.stella.Absyn.ListExpr result ]
     { $result = $p_2_3.result; $result.addFirst($p_2_1.result); }
   ;
 expr3 returns [ org.syntax.stella.Absyn.Expr result ]
-  : p_1_1=expr3 Surrogate_id_SYMB_36 p_1_3=type2
+  : p_1_1=expr3 Surrogate_id_SYMB_41 p_1_3=type2
     { $result = new org.syntax.stella.Absyn.TypeAsc($p_1_1.result,$p_1_3.result); }
-  | Surrogate_id_SYMB_43 Surrogate_id_SYMB_2 p_2_3=listParamDecl Surrogate_id_SYMB_3 Surrogate_id_SYMB_4 Surrogate_id_SYMB_56 p_2_7=expr Surrogate_id_SYMB_5
-    { $result = new org.syntax.stella.Absyn.Abstraction($p_2_3.result,$p_2_7.result); }
-  | Surrogate_id_SYMB_11 p_3_2=StellaIdent p_3_3=exprData Surrogate_id_SYMB_12
-    { $result = new org.syntax.stella.Absyn.Variant($p_3_2.getText(),$p_3_3.result); }
-  | Surrogate_id_SYMB_53 p_4_2=expr2 Surrogate_id_SYMB_4 p_4_4=listMatchCase Surrogate_id_SYMB_5
-    { $result = new org.syntax.stella.Absyn.Match($p_4_2.result,$p_4_4.result); }
-  | Surrogate_id_SYMB_13 p_5_2=listExpr Surrogate_id_SYMB_14
-    { $result = new org.syntax.stella.Absyn.List($p_5_2.result); }
-  | p_6_1=expr3 Surrogate_id_SYMB_21 p_6_3=expr4
-    { $result = new org.syntax.stella.Absyn.Add($p_6_1.result,$p_6_3.result); }
+  | p_2_1=expr3 Surrogate_id_SYMB_42 Surrogate_id_SYMB_41 p_2_4=type2
+    { $result = new org.syntax.stella.Absyn.TypeCast($p_2_1.result,$p_2_4.result); }
+  | Surrogate_id_SYMB_51 Surrogate_id_SYMB_2 p_3_3=listParamDecl Surrogate_id_SYMB_3 Surrogate_id_SYMB_4 Surrogate_id_SYMB_65 p_3_7=expr Surrogate_id_SYMB_5
+    { $result = new org.syntax.stella.Absyn.Abstraction($p_3_3.result,$p_3_7.result); }
+  | Surrogate_id_SYMB_11 p_4_2=StellaIdent p_4_3=exprData Surrogate_id_SYMB_12
+    { $result = new org.syntax.stella.Absyn.Variant($p_4_2.getText(),$p_4_3.result); }
+  | Surrogate_id_SYMB_61 p_5_2=expr2 Surrogate_id_SYMB_4 p_5_4=listMatchCase Surrogate_id_SYMB_5
+    { $result = new org.syntax.stella.Absyn.Match($p_5_2.result,$p_5_4.result); }
+  | Surrogate_id_SYMB_13 p_6_2=listExpr Surrogate_id_SYMB_14
+    { $result = new org.syntax.stella.Absyn.List($p_6_2.result); }
   | p_7_1=expr3 Surrogate_id_SYMB_22 p_7_3=expr4
-    { $result = new org.syntax.stella.Absyn.Subtract($p_7_1.result,$p_7_3.result); }
-  | p_8_1=expr3 Surrogate_id_SYMB_55 p_8_3=expr4
-    { $result = new org.syntax.stella.Absyn.LogicOr($p_8_1.result,$p_8_3.result); }
-  | p_9_1=expr4
-    { $result = $p_9_1.result; }
+    { $result = new org.syntax.stella.Absyn.Add($p_7_1.result,$p_7_3.result); }
+  | p_8_1=expr3 Surrogate_id_SYMB_23 p_8_3=expr4
+    { $result = new org.syntax.stella.Absyn.Subtract($p_8_1.result,$p_8_3.result); }
+  | p_9_1=expr3 Surrogate_id_SYMB_64 p_9_3=expr4
+    { $result = new org.syntax.stella.Absyn.LogicOr($p_9_1.result,$p_9_3.result); }
+  | p_10_1=expr4
+    { $result = $p_10_1.result; }
   ;
 expr4 returns [ org.syntax.stella.Absyn.Expr result ]
-  : p_1_1=expr4 Surrogate_id_SYMB_23 p_1_3=expr5
+  : p_1_1=expr4 Surrogate_id_SYMB_24 p_1_3=expr5
     { $result = new org.syntax.stella.Absyn.Multiply($p_1_1.result,$p_1_3.result); }
-  | p_2_1=expr4 Surrogate_id_SYMB_24 p_2_3=expr5
+  | p_2_1=expr4 Surrogate_id_SYMB_25 p_2_3=expr5
     { $result = new org.syntax.stella.Absyn.Divide($p_2_1.result,$p_2_3.result); }
-  | p_3_1=expr4 Surrogate_id_SYMB_35 p_3_3=expr5
+  | p_3_1=expr4 Surrogate_id_SYMB_40 p_3_3=expr5
     { $result = new org.syntax.stella.Absyn.LogicAnd($p_3_1.result,$p_3_3.result); }
   | p_4_1=expr5
     { $result = $p_4_1.result; }
   ;
+expr5 returns [ org.syntax.stella.Absyn.Expr result ]
+  : Surrogate_id_SYMB_62 Surrogate_id_SYMB_2 p_1_3=expr5 Surrogate_id_SYMB_3
+    { $result = new org.syntax.stella.Absyn.Ref($p_1_3.result); }
+  | Surrogate_id_SYMB_24 p_2_2=expr5
+    { $result = new org.syntax.stella.Absyn.Deref($p_2_2.result); }
+  | p_3_1=expr6
+    { $result = $p_3_1.result; }
+  ;
 expr6 returns [ org.syntax.stella.Absyn.Expr result ]
   : p_1_1=expr6 Surrogate_id_SYMB_2 p_1_3=listExpr Surrogate_id_SYMB_3
     { $result = new org.syntax.stella.Absyn.Application($p_1_1.result,$p_1_3.result); }
-  | p_2_1=expr6 Surrogate_id_SYMB_25 p_2_3=StellaIdent
+  | p_2_1=expr6 Surrogate_id_SYMB_26 p_2_3=StellaIdent
     { $result = new org.syntax.stella.Absyn.DotRecord($p_2_1.result,$p_2_3.getText()); }
-  | p_3_1=expr6 Surrogate_id_SYMB_25 p_3_3=INTEGER
+  | p_3_1=expr6 Surrogate_id_SYMB_26 p_3_3=INTEGER
     { $result = new org.syntax.stella.Absyn.DotTuple($p_3_1.result,Integer.parseInt($p_3_3.getText())); }
   | Surrogate_id_SYMB_4 p_4_2=listExpr Surrogate_id_SYMB_5
     { $result = new org.syntax.stella.Absyn.Tuple($p_4_2.result); }
   | Surrogate_id_SYMB_4 p_5_2=listBinding Surrogate_id_SYMB_5
     { $result = new org.syntax.stella.Absyn.Record($p_5_2.result); }
-  | Surrogate_id_SYMB_37 Surrogate_id_SYMB_2 p_6_3=expr Surrogate_id_SYMB_0 p_6_5=expr Surrogate_id_SYMB_3
+  | Surrogate_id_SYMB_44 Surrogate_id_SYMB_2 p_6_3=expr Surrogate_id_SYMB_0 p_6_5=expr Surrogate_id_SYMB_3
     { $result = new org.syntax.stella.Absyn.ConsList($p_6_3.result,$p_6_5.result); }
-  | Surrogate_id_SYMB_26 Surrogate_id_SYMB_2 p_7_3=expr Surrogate_id_SYMB_3
+  | Surrogate_id_SYMB_27 Surrogate_id_SYMB_2 p_7_3=expr Surrogate_id_SYMB_3
     { $result = new org.syntax.stella.Absyn.Head($p_7_3.result); }
-  | Surrogate_id_SYMB_27 Surrogate_id_SYMB_2 p_8_3=expr Surrogate_id_SYMB_3
+  | Surrogate_id_SYMB_28 Surrogate_id_SYMB_2 p_8_3=expr Surrogate_id_SYMB_3
     { $result = new org.syntax.stella.Absyn.IsEmpty($p_8_3.result); }
-  | Surrogate_id_SYMB_28 Surrogate_id_SYMB_2 p_9_3=expr Surrogate_id_SYMB_3
+  | Surrogate_id_SYMB_29 Surrogate_id_SYMB_2 p_9_3=expr Surrogate_id_SYMB_3
     { $result = new org.syntax.stella.Absyn.Tail($p_9_3.result); }
-  | Surrogate_id_SYMB_47 Surrogate_id_SYMB_2 p_10_3=expr Surrogate_id_SYMB_3
-    { $result = new org.syntax.stella.Absyn.Inl($p_10_3.result); }
-  | Surrogate_id_SYMB_49 Surrogate_id_SYMB_2 p_11_3=expr Surrogate_id_SYMB_3
-    { $result = new org.syntax.stella.Absyn.Inr($p_11_3.result); }
-  | Surrogate_id_SYMB_57 Surrogate_id_SYMB_2 p_12_3=expr Surrogate_id_SYMB_3
-    { $result = new org.syntax.stella.Absyn.Succ($p_12_3.result); }
-  | Surrogate_id_SYMB_54 Surrogate_id_SYMB_2 p_13_3=expr Surrogate_id_SYMB_3
-    { $result = new org.syntax.stella.Absyn.LogicNot($p_13_3.result); }
-  | Surrogate_id_SYMB_29 Surrogate_id_SYMB_2 p_14_3=expr Surrogate_id_SYMB_3
-    { $result = new org.syntax.stella.Absyn.Pred($p_14_3.result); }
-  | Surrogate_id_SYMB_30 Surrogate_id_SYMB_2 p_15_3=expr Surrogate_id_SYMB_3
-    { $result = new org.syntax.stella.Absyn.IsZero($p_15_3.result); }
-  | Surrogate_id_SYMB_42 Surrogate_id_SYMB_2 p_16_3=expr Surrogate_id_SYMB_3
-    { $result = new org.syntax.stella.Absyn.Fix($p_16_3.result); }
-  | Surrogate_id_SYMB_31 Surrogate_id_SYMB_2 p_17_3=expr Surrogate_id_SYMB_0 p_17_5=expr Surrogate_id_SYMB_0 p_17_7=expr Surrogate_id_SYMB_3
-    { $result = new org.syntax.stella.Absyn.NatRec($p_17_3.result,$p_17_5.result,$p_17_7.result); }
-  | Surrogate_id_SYMB_44 Surrogate_id_SYMB_13 p_18_3=type Surrogate_id_SYMB_14 p_18_5=expr7
-    { $result = new org.syntax.stella.Absyn.Fold($p_18_3.result,$p_18_5.result); }
-  | Surrogate_id_SYMB_62 Surrogate_id_SYMB_13 p_19_3=type Surrogate_id_SYMB_14 p_19_5=expr7
-    { $result = new org.syntax.stella.Absyn.Unfold($p_19_3.result,$p_19_5.result); }
-  | p_20_1=expr7
-    { $result = $p_20_1.result; }
+  | Surrogate_id_SYMB_30
+    { $result = new org.syntax.stella.Absyn.Panic(); }
+  | Surrogate_id_SYMB_68 Surrogate_id_SYMB_2 p_11_3=expr Surrogate_id_SYMB_3
+    { $result = new org.syntax.stella.Absyn.Throw($p_11_3.result); }
+  | Surrogate_id_SYMB_71 Surrogate_id_SYMB_4 p_12_3=expr Surrogate_id_SYMB_5 Surrogate_id_SYMB_43 Surrogate_id_SYMB_4 p_12_7=pattern Surrogate_id_SYMB_9 p_12_9=expr Surrogate_id_SYMB_5
+    { $result = new org.syntax.stella.Absyn.TryCatch($p_12_3.result,$p_12_7.result,$p_12_9.result); }
+  | Surrogate_id_SYMB_71 Surrogate_id_SYMB_4 p_13_3=expr Surrogate_id_SYMB_5 Surrogate_id_SYMB_76 Surrogate_id_SYMB_4 p_13_7=expr Surrogate_id_SYMB_5
+    { $result = new org.syntax.stella.Absyn.TryWith($p_13_3.result,$p_13_7.result); }
+  | Surrogate_id_SYMB_55 Surrogate_id_SYMB_2 p_14_3=expr Surrogate_id_SYMB_3
+    { $result = new org.syntax.stella.Absyn.Inl($p_14_3.result); }
+  | Surrogate_id_SYMB_57 Surrogate_id_SYMB_2 p_15_3=expr Surrogate_id_SYMB_3
+    { $result = new org.syntax.stella.Absyn.Inr($p_15_3.result); }
+  | Surrogate_id_SYMB_66 Surrogate_id_SYMB_2 p_16_3=expr Surrogate_id_SYMB_3
+    { $result = new org.syntax.stella.Absyn.Succ($p_16_3.result); }
+  | Surrogate_id_SYMB_63 Surrogate_id_SYMB_2 p_17_3=expr Surrogate_id_SYMB_3
+    { $result = new org.syntax.stella.Absyn.LogicNot($p_17_3.result); }
+  | Surrogate_id_SYMB_31 Surrogate_id_SYMB_2 p_18_3=expr Surrogate_id_SYMB_3
+    { $result = new org.syntax.stella.Absyn.Pred($p_18_3.result); }
+  | Surrogate_id_SYMB_32 Surrogate_id_SYMB_2 p_19_3=expr Surrogate_id_SYMB_3
+    { $result = new org.syntax.stella.Absyn.IsZero($p_19_3.result); }
+  | Surrogate_id_SYMB_50 Surrogate_id_SYMB_2 p_20_3=expr Surrogate_id_SYMB_3
+    { $result = new org.syntax.stella.Absyn.Fix($p_20_3.result); }
+  | Surrogate_id_SYMB_33 Surrogate_id_SYMB_2 p_21_3=expr Surrogate_id_SYMB_0 p_21_5=expr Surrogate_id_SYMB_0 p_21_7=expr Surrogate_id_SYMB_3
+    { $result = new org.syntax.stella.Absyn.NatRec($p_21_3.result,$p_21_5.result,$p_21_7.result); }
+  | Surrogate_id_SYMB_52 Surrogate_id_SYMB_13 p_22_3=type Surrogate_id_SYMB_14 p_22_5=expr7
+    { $result = new org.syntax.stella.Absyn.Fold($p_22_3.result,$p_22_5.result); }
+  | Surrogate_id_SYMB_73 Surrogate_id_SYMB_13 p_23_3=type Surrogate_id_SYMB_14 p_23_5=expr7
+    { $result = new org.syntax.stella.Absyn.Unfold($p_23_3.result,$p_23_5.result); }
+  | p_24_1=expr7
+    { $result = $p_24_1.result; }
   ;
 expr7 returns [ org.syntax.stella.Absyn.Expr result ]
-  : Surrogate_id_SYMB_60
+  : Surrogate_id_SYMB_70
     { $result = new org.syntax.stella.Absyn.ConstTrue(); }
-  | Surrogate_id_SYMB_41
+  | Surrogate_id_SYMB_49
     { $result = new org.syntax.stella.Absyn.ConstFalse(); }
-  | Surrogate_id_SYMB_63
+  | Surrogate_id_SYMB_74
     { $result = new org.syntax.stella.Absyn.ConstUnit(); }
   | p_4_1=INTEGER
     { $result = new org.syntax.stella.Absyn.ConstInt(Integer.parseInt($p_4_1.getText())); }
-  | p_5_1=StellaIdent
-    { $result = new org.syntax.stella.Absyn.Var($p_5_1.getText()); }
-  | Surrogate_id_SYMB_2 p_6_2=expr Surrogate_id_SYMB_3
-    { $result = $p_6_2.result; }
+  | p_5_1=MemoryAddress
+    { $result = new org.syntax.stella.Absyn.ConstMemory($p_5_1.getText()); }
+  | p_6_1=StellaIdent
+    { $result = new org.syntax.stella.Absyn.Var($p_6_1.getText()); }
+  | Surrogate_id_SYMB_2 p_7_2=expr Surrogate_id_SYMB_3
+    { $result = $p_7_2.result; }
   ;
 type returns [ org.syntax.stella.Absyn.Type result ]
-  : Surrogate_id_SYMB_43 Surrogate_id_SYMB_2 p_1_3=listType Surrogate_id_SYMB_3 Surrogate_id_SYMB_8 p_1_6=type
+  : Surrogate_id_SYMB_51 Surrogate_id_SYMB_2 p_1_3=listType Surrogate_id_SYMB_3 Surrogate_id_SYMB_8 p_1_6=type
     { $result = new org.syntax.stella.Absyn.TypeFun($p_1_3.result,$p_1_6.result); }
-  | Surrogate_id_SYMB_65 p_2_2=StellaIdent Surrogate_id_SYMB_25 p_2_4=type
+  | Surrogate_id_SYMB_77 p_2_2=StellaIdent Surrogate_id_SYMB_26 p_2_4=type
     { $result = new org.syntax.stella.Absyn.TypeRec($p_2_2.getText(),$p_2_4.result); }
   | p_3_1=type1
     { $result = $p_3_1.result; }
   ;
 type1 returns [ org.syntax.stella.Absyn.Type result ]
-  : p_1_1=type2 Surrogate_id_SYMB_21 p_1_3=type2
+  : p_1_1=type2 Surrogate_id_SYMB_22 p_1_3=type2
     { $result = new org.syntax.stella.Absyn.TypeSum($p_1_1.result,$p_1_3.result); }
   | p_2_1=type2
     { $result = $p_2_1.result; }
@@ -572,16 +598,22 @@ type2 returns [ org.syntax.stella.Absyn.Type result ]
     { $result = $p_5_1.result; }
   ;
 type3 returns [ org.syntax.stella.Absyn.Type result ]
-  : Surrogate_id_SYMB_32
+  : Surrogate_id_SYMB_35
     { $result = new org.syntax.stella.Absyn.TypeBool(); }
-  | Surrogate_id_SYMB_33
+  | Surrogate_id_SYMB_37
     { $result = new org.syntax.stella.Absyn.TypeNat(); }
-  | Surrogate_id_SYMB_34
+  | Surrogate_id_SYMB_39
     { $result = new org.syntax.stella.Absyn.TypeUnit(); }
-  | p_4_1=StellaIdent
-    { $result = new org.syntax.stella.Absyn.TypeVar($p_4_1.getText()); }
-  | Surrogate_id_SYMB_2 p_5_2=type Surrogate_id_SYMB_3
-    { $result = $p_5_2.result; }
+  | Surrogate_id_SYMB_38
+    { $result = new org.syntax.stella.Absyn.TypeTop(); }
+  | Surrogate_id_SYMB_36
+    { $result = new org.syntax.stella.Absyn.TypeBottom(); }
+  | Surrogate_id_SYMB_34 p_6_2=type2
+    { $result = new org.syntax.stella.Absyn.TypeRef($p_6_2.result); }
+  | p_7_1=StellaIdent
+    { $result = new org.syntax.stella.Absyn.TypeVar($p_7_1.getText()); }
+  | Surrogate_id_SYMB_2 p_8_2=type Surrogate_id_SYMB_3
+    { $result = $p_8_2.result; }
   ;
 listType returns [ org.syntax.stella.Absyn.ListType result ]
   :  /* empty */
@@ -590,10 +622,6 @@ listType returns [ org.syntax.stella.Absyn.ListType result ]
     { $result = new org.syntax.stella.Absyn.ListType(); $result.addLast($p_2_1.result); }
   | p_3_1=type Surrogate_id_SYMB_0 p_3_3=listType
     { $result = $p_3_3.result; $result.addFirst($p_3_1.result); }
-  ;
-expr5 returns [ org.syntax.stella.Absyn.Expr result ]
-  : p_1_1=expr6
-    { $result = $p_1_1.result; }
   ;
 variantFieldType returns [ org.syntax.stella.Absyn.VariantFieldType result ]
   : p_1_1=StellaIdent p_1_2=optionalTyping

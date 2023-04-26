@@ -23,6 +23,8 @@ public class AbstractVisitor<R,A> implements AllVisitor<R,A> {
     /* Decl */
     public R visit(org.syntax.stella.Absyn.DeclFun p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.DeclTypeAlias p, A arg) { return visitDefault(p, arg); }
+    public R visit(org.syntax.stella.Absyn.DeclExceptionType p, A arg) { return visitDefault(p, arg); }
+    public R visit(org.syntax.stella.Absyn.DeclExceptionVariant p, A arg) { return visitDefault(p, arg); }
     public R visitDefault(org.syntax.stella.Absyn.Decl p, A arg) {
       throw new IllegalArgumentException(this.getClass().getName() + ": " + p);
     }
@@ -64,6 +66,9 @@ public class AbstractVisitor<R,A> implements AllVisitor<R,A> {
     public R visit(org.syntax.stella.Absyn.TypeBool p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.TypeNat p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.TypeUnit p, A arg) { return visitDefault(p, arg); }
+    public R visit(org.syntax.stella.Absyn.TypeTop p, A arg) { return visitDefault(p, arg); }
+    public R visit(org.syntax.stella.Absyn.TypeBottom p, A arg) { return visitDefault(p, arg); }
+    public R visit(org.syntax.stella.Absyn.TypeRef p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.TypeVar p, A arg) { return visitDefault(p, arg); }
     public R visitDefault(org.syntax.stella.Absyn.Type p, A arg) {
       throw new IllegalArgumentException(this.getClass().getName() + ": " + p);
@@ -120,9 +125,10 @@ public class AbstractVisitor<R,A> implements AllVisitor<R,A> {
     }
     /* Expr */
     public R visit(org.syntax.stella.Absyn.Sequence p, A arg) { return visitDefault(p, arg); }
-    public R visit(org.syntax.stella.Absyn.If p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.Let p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.LetRec p, A arg) { return visitDefault(p, arg); }
+    public R visit(org.syntax.stella.Absyn.Assign p, A arg) { return visitDefault(p, arg); }
+    public R visit(org.syntax.stella.Absyn.If p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.LessThan p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.LessThanOrEqual p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.GreaterThan p, A arg) { return visitDefault(p, arg); }
@@ -130,6 +136,7 @@ public class AbstractVisitor<R,A> implements AllVisitor<R,A> {
     public R visit(org.syntax.stella.Absyn.Equal p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.NotEqual p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.TypeAsc p, A arg) { return visitDefault(p, arg); }
+    public R visit(org.syntax.stella.Absyn.TypeCast p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.Abstraction p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.Variant p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.Match p, A arg) { return visitDefault(p, arg); }
@@ -140,6 +147,8 @@ public class AbstractVisitor<R,A> implements AllVisitor<R,A> {
     public R visit(org.syntax.stella.Absyn.Multiply p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.Divide p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.LogicAnd p, A arg) { return visitDefault(p, arg); }
+    public R visit(org.syntax.stella.Absyn.Ref p, A arg) { return visitDefault(p, arg); }
+    public R visit(org.syntax.stella.Absyn.Deref p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.Application p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.DotRecord p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.DotTuple p, A arg) { return visitDefault(p, arg); }
@@ -149,6 +158,10 @@ public class AbstractVisitor<R,A> implements AllVisitor<R,A> {
     public R visit(org.syntax.stella.Absyn.Head p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.IsEmpty p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.Tail p, A arg) { return visitDefault(p, arg); }
+    public R visit(org.syntax.stella.Absyn.Panic p, A arg) { return visitDefault(p, arg); }
+    public R visit(org.syntax.stella.Absyn.Throw p, A arg) { return visitDefault(p, arg); }
+    public R visit(org.syntax.stella.Absyn.TryCatch p, A arg) { return visitDefault(p, arg); }
+    public R visit(org.syntax.stella.Absyn.TryWith p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.Inl p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.Inr p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.Succ p, A arg) { return visitDefault(p, arg); }
@@ -163,6 +176,7 @@ public class AbstractVisitor<R,A> implements AllVisitor<R,A> {
     public R visit(org.syntax.stella.Absyn.ConstFalse p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.ConstUnit p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.ConstInt p, A arg) { return visitDefault(p, arg); }
+    public R visit(org.syntax.stella.Absyn.ConstMemory p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.Var p, A arg) { return visitDefault(p, arg); }
     public R visitDefault(org.syntax.stella.Absyn.Expr p, A arg) {
       throw new IllegalArgumentException(this.getClass().getName() + ": " + p);
