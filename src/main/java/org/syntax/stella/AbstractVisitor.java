@@ -22,6 +22,7 @@ public class AbstractVisitor<R,A> implements AllVisitor<R,A> {
     }
     /* Decl */
     public R visit(org.syntax.stella.Absyn.DeclFun p, A arg) { return visitDefault(p, arg); }
+    public R visit(org.syntax.stella.Absyn.DeclFunGeneric p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.DeclTypeAlias p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.DeclExceptionType p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.DeclExceptionVariant p, A arg) { return visitDefault(p, arg); }
@@ -57,6 +58,7 @@ public class AbstractVisitor<R,A> implements AllVisitor<R,A> {
     }
     /* Type */
     public R visit(org.syntax.stella.Absyn.TypeFun p, A arg) { return visitDefault(p, arg); }
+    public R visit(org.syntax.stella.Absyn.TypeForAll p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.TypeRec p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.TypeSum p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.TypeTuple p, A arg) { return visitDefault(p, arg); }
@@ -127,6 +129,7 @@ public class AbstractVisitor<R,A> implements AllVisitor<R,A> {
     public R visit(org.syntax.stella.Absyn.Sequence p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.Let p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.LetRec p, A arg) { return visitDefault(p, arg); }
+    public R visit(org.syntax.stella.Absyn.TypeAbstraction p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.Assign p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.If p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.LessThan p, A arg) { return visitDefault(p, arg); }
@@ -150,6 +153,7 @@ public class AbstractVisitor<R,A> implements AllVisitor<R,A> {
     public R visit(org.syntax.stella.Absyn.Ref p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.Deref p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.Application p, A arg) { return visitDefault(p, arg); }
+    public R visit(org.syntax.stella.Absyn.TypeApplication p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.DotRecord p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.DotTuple p, A arg) { return visitDefault(p, arg); }
     public R visit(org.syntax.stella.Absyn.Tuple p, A arg) { return visitDefault(p, arg); }

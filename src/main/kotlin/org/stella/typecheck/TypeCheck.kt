@@ -2,55 +2,61 @@ package org.stella.typecheck
 
 import Output
 import org.syntax.stella.Absyn.*
-import java.util.LinkedHashMap
-import javax.swing.RowFilter.ComparisonType
 
 object TypeCheck {
     // class for storing the current variables in scope and their types
     class Context( var currentVars: MutableMap<String, Type> = mutableMapOf() ){
     }
+fun typecheckFunction(context: Context,name: String, returnType: ReturnType, params: List<ParamDecl>, expr: Expr){
+
+ // create a new context for the function scope
+    val paramTypes = ListType()
+    for (param in params) {
+        when (param) {
+            is AParamDecl -> {
+                context.currentVars[param.stellaident_] = param.type_ // adding the parameter to the context
+                paramTypes.add(context.currentVars[param.stellaident_])
+            }
+        }
+    }
+
+    var actualType : Type = TypeNat()
+    when (returnType) {
+        is SomeReturnType -> {
+            val shouldReturn = returnType.type_
+            actualType = calculateExpression(Context(context.currentVars), expr,returnType.type_)
+
+            Output(checkEq(context, shouldReturn, actualType)).
+            ThrowExpectedGotEr( //check if return type is the same as the calculated type
+                shouldReturn,
+                actualType,
+                "${returnType.line_num}:${returnType.col_num}"
+            )
+        }
+
+    }
+    context.currentVars[name] = TypeFun(paramTypes, actualType)  // saving function type to context
 
 
+
+}
     fun typecheckProgram(program: Program) {
         val fullContext = Context(mutableMapOf())
         when (program) {
             is AProgram -> program.listdecl_.map {
                 when (it) {
+
+                    is DeclFunGeneric -> {
+                        typecheckFunction(Context(fullContext.currentVars), it.stellaident_, it.returntype_, it.listparamdecl_, it.expr_)
+
+                        for ( name in it.liststellaident_){
+                            if (!(fullContext.currentVars[it.stellaident_] as TypeFun).listtype_.contains(TypeVar(name))) {
+                                (fullContext.currentVars[it.stellaident_] as TypeFun).listtype_.add(TypeVar(name))
+                            }
+                        }
+                    }
                     is DeclFun -> {  // if the declaration is a function declaration
-
-                        val name = it.stellaident_
-                        val returnType = it.returntype_
-                        val params = it.listparamdecl_
-                        val expr = it.expr_
-
-                        val context = Context(fullContext.currentVars) // create a new context for the function scope
-                        val paramTypes = ListType()
-                        for (param in params) {
-                            when (param) {
-                                is AParamDecl -> {
-                                    context.currentVars[param.stellaident_] = param.type_ // adding the parameter to the context
-                                    paramTypes.add(context.currentVars[param.stellaident_])
-                                }
-                            }
-                        }
-
-                        var actualType : Type = TypeNat()
-                        if (it.returntype_ is SomeReturnType) {
-                            actualType = calculateExpression(Context(context.currentVars), expr,it.returntype_.type_)
-                        }
-                        context.currentVars[name] = TypeFun(paramTypes, actualType)  // saving function type to context
-
-                        when (returnType) {
-                            is SomeReturnType -> {
-                                Output(checkEq(returnType.type_ , actualType)).
-                                        ThrowExpectedGotEr( //check if return type is the same as the calculated type
-                                            returnType.type_,
-                                            actualType,
-                                            "${returnType.line_num}:${returnType.col_num}"
-                                        )
-                            }
-                        }
-
+                        typecheckFunction(Context(fullContext.currentVars), it.stellaident_, it.returntype_, it.listparamdecl_, it.expr_)
                     }
 
 
@@ -75,6 +81,7 @@ object TypeCheck {
             is ConstUnit -> { // if it is a unit, return Unit
                 return TypeUnit()
             }
+
 
             is Tuple -> { // if it is a tuple, return a tuple with the types of the expressions in the tuple
                 val list = ListType()
@@ -110,10 +117,10 @@ object TypeCheck {
                 val trueExp = calculateExpression(Context(context.currentVars), expr.expr_2,expType)
                 val falseExp = calculateExpression(Context(context.currentVars), expr.expr_3,expType)
 
-                Output(checkEq(trueExp, falseExp)).
+                Output(checkEq(context,trueExp, falseExp)).
                         ThrowExpectedEqTypes(trueExp, falseExp, "${expr.line_num}:${expr.col_num}")
 
-                Output(checkEq(ifCondition, TypeBool())).ThrowExpectedGotEr(
+                Output(checkEq(context,ifCondition, TypeBool())).ThrowExpectedGotEr(
                     TypeBool(),
                     ifCondition,
                     "${expr.line_num}:${expr.col_num}"
@@ -148,12 +155,12 @@ object TypeCheck {
 
                         val paramType = function.listtype_[0]
 
-                        Output(checkEq(paramType , TypeNat())). //check if the parameter is Nat
+                        Output(checkEq(context,paramType , TypeNat())). //check if the parameter is Nat
                                 ThrowExpectedGotEr(TypeNat(), paramType, "${expr.line_num}:${expr.col_num}")
 
                         val returnType = function.type_
 
-                        Output(checkEq(returnType, TypeFun(expInp, initValueType))).ThrowExpectedGotEr(
+                        Output(checkEq(context,returnType, TypeFun(expInp, initValueType))).ThrowExpectedGotEr(
                             TypeFun( //check if the return type is fn(T) -> T
                                 expInp,
                                 initValueType
@@ -173,7 +180,6 @@ object TypeCheck {
             }
 
             is Application -> {
-
                 val func = calculateExpression(Context(context.currentVars), expr.expr_, TypeUnit()) //evaluate the function type
                 val args = ListType()
 
@@ -184,7 +190,7 @@ object TypeCheck {
                             args.add(calculateExpression(Context(context.currentVars), i, func.listtype_[0]))
                         }
                         if (func.listtype_.size == 1) {
-                            Output(checkEq(func.listtype_[0], args[0])).ThrowExpectedGotEr(
+                            Output(checkEq(context,func.listtype_[0], args[0])).ThrowExpectedGotEr(
                                 func.listtype_[0],
                                 args[0],
                                 "${expr.line_num}:${expr.col_num}"
@@ -270,7 +276,7 @@ object TypeCheck {
                             if(outputTypes.size==0){
                                 outputTypes.add(innerMatchExprType)
                             }else{
-                                Output(checkEq(outputTypes[0], innerMatchExprType)).
+                                Output(checkEq(context,outputTypes[0], innerMatchExprType)).
                                 ThrowExpectedGotEr(outputTypes[0], innerMatchExprType, "${expr.line_num}:${expr.col_num}")
                             }
                         }
@@ -297,7 +303,7 @@ object TypeCheck {
                 val type= calculateExpression(Context(context.currentVars), expr.expr_1, TypeUnit())
                 if(type is TypeRef){
                     val type2= calculateExpression(Context(context.currentVars), expr.expr_2,type.type_)
-                    Output(checkEq(type.type_, type2)).ThrowExpectedGotEr(type.type_, type2, "${expr.line_num}:${expr.col_num}")
+                    Output(checkEq(context,type.type_, type2)).ThrowExpectedGotEr(type.type_, type2, "${expr.line_num}:${expr.col_num}")
                     return TypeUnit()
                 }
                 Output(false).ThrowExpectedGotEr(TypeRef(null), type, "${expr.line_num}:${expr.col_num}")
@@ -333,27 +339,87 @@ object TypeCheck {
             is Panic->{
                 return expType;
             }
+            is TypeAbstraction->{
+                val context= Context(context.currentVars)
+                val paramTypes = ListType()
+                for (param in expr.liststellaident_) {
+                            context.currentVars[param] = TypeVar(param)
+                            if(!paramTypes.contains(TypeVar(param)))
+                                paramTypes.add( TypeVar(param))
+                }
+
+                var type = calculateExpression(Context(context.currentVars), expr.expr_,expType) //calculate the type of the expression
+                if (type is TypeFun) {
+                    return TypeFun(paramTypes,type.type_)
+                }
+
+            }
+            is TypeApplication->{
+
+                val types= expr.listtype_
+                val context= Context(context.currentVars)
+                //replace the type generic variables with the types
+                val it = calculateExpression(Context(context.currentVars),expr.expr_, TypeUnit())
+                when(it){
+                    is TypeFun->{
+                        var ind=0;
+                        for( type in it.listtype_){
+                            when(type){
+                                is TypeVar->{
+
+                                    context.currentVars[type.stellaident_]= types[ind]
+                                    ind+=1
+                                }
+                            }
+                        }
+
+                    }
+                    else->{
+
+                    }
+
+                }
+
+                val calculatedExpression = calculateExpression(Context(context.currentVars), expr.expr_,expType) //calculate the type of the expression
+
+                return calculatedExpression
+
+            }
         }
 
-        Output(false).ThrowNotImplementedError(expr);
-        return TypeBool()
+                //print the error and line number
+                Output(false).ThrowNotImplementedError(expr);
+                return TypeBool()
 
-    }
+        }
 
 
 
-    private fun checkEq(arg1: Type, arg2: Type?): Boolean {
+    private fun checkEq(context: Context, arg1: Type?, arg2: Type?): Boolean {
         return if (arg1 is TypeSum && arg2 is TypeSum) {
-            checkEq(arg1.type_1,arg1.type_1) || checkEq(arg1.type_2,arg2.type_2)
+            checkEq(context,arg1.type_1,arg1.type_1) || checkEq(context,arg1.type_2,arg2.type_2)
         }
         else if (arg1 is TypeRecord && arg2 is TypeRecord) {
             arg2.listrecordfieldtype_.containsAll(arg1.listrecordfieldtype_)
         }
         else if (arg1 is TypeFun && arg2 is TypeFun) {
-            checkEq(arg2.listtype_[0],arg1.listtype_[0]) && checkEq(arg1.type_,arg2.type_)
+            checkEq(context,arg2.listtype_[0],arg1.listtype_[0]) && checkEq(context,arg1.type_,arg2.type_)
         }
         else if (arg1 is TypeTop){
             true
+        }else if(arg1 is TypeVar  && arg2 is TypeVar ) {
+            arg1.stellaident_ == arg2.stellaident_
+        }
+        else if (arg1 is TypeForAll) {
+            checkEq(context,arg1.type_,arg2)
+        }
+        else if( arg1 is TypeVar && context.currentVars.contains(arg1.stellaident_) && context.currentVars[arg1.stellaident_] !is TypeVar){
+            println(context.currentVars[arg1.stellaident_].toString()+" "+arg2.toString())
+            checkEq(context,context.currentVars[arg1.stellaident_],arg2)
+        }
+        else if( arg2 is TypeVar  && context.currentVars.contains(arg2.stellaident_) && context.currentVars[arg2.stellaident_] !is TypeVar){
+
+            checkEq(context,arg1,context.currentVars[arg2.stellaident_])
         }
         else {
             arg1 == arg2
@@ -372,7 +438,7 @@ object TypeCheck {
      */
     private fun checkIfExprIsNumber(context: Context, expr: Expr, where: String): Type {
         val innerExpr = calculateExpression(Context(context.currentVars), expr, TypeNat())
-        Output(checkEq(innerExpr, TypeNat())).
+        Output(checkEq(context,innerExpr, TypeNat())).
                 ThrowExpectedGotEr(TypeNat(), innerExpr, where)
 
         return innerExpr

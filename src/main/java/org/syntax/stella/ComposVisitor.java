@@ -82,6 +82,30 @@ public class ComposVisitor<A> implements
       org.syntax.stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
       return new org.syntax.stella.Absyn.DeclFun(listannotation_, stellaident_, listparamdecl_, returntype_, throwtype_, listdecl_, expr_);
     }
+    public org.syntax.stella.Absyn.Decl visit(org.syntax.stella.Absyn.DeclFunGeneric p, A arg)
+    {
+      org.syntax.stella.Absyn.ListAnnotation listannotation_ = new org.syntax.stella.Absyn.ListAnnotation();
+      for (org.syntax.stella.Absyn.Annotation x : p.listannotation_)
+      {
+        listannotation_.add(x.accept(this,arg));
+      }
+      String stellaident_ = p.stellaident_;
+      org.syntax.stella.Absyn.ListStellaIdent liststellaident_ = p.liststellaident_;
+      org.syntax.stella.Absyn.ListParamDecl listparamdecl_ = new org.syntax.stella.Absyn.ListParamDecl();
+      for (org.syntax.stella.Absyn.ParamDecl x : p.listparamdecl_)
+      {
+        listparamdecl_.add(x.accept(this,arg));
+      }
+      org.syntax.stella.Absyn.ReturnType returntype_ = p.returntype_.accept(this, arg);
+      org.syntax.stella.Absyn.ThrowType throwtype_ = p.throwtype_.accept(this, arg);
+      org.syntax.stella.Absyn.ListDecl listdecl_ = new org.syntax.stella.Absyn.ListDecl();
+      for (org.syntax.stella.Absyn.Decl x : p.listdecl_)
+      {
+        listdecl_.add(x.accept(this,arg));
+      }
+      org.syntax.stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      return new org.syntax.stella.Absyn.DeclFunGeneric(listannotation_, stellaident_, liststellaident_, listparamdecl_, returntype_, throwtype_, listdecl_, expr_);
+    }
     public org.syntax.stella.Absyn.Decl visit(org.syntax.stella.Absyn.DeclTypeAlias p, A arg)
     {
       String stellaident_ = p.stellaident_;
@@ -157,6 +181,12 @@ public class ComposVisitor<A> implements
       }
       org.syntax.stella.Absyn.Type type_ = p.type_.accept(this, arg);
       return new org.syntax.stella.Absyn.TypeFun(listtype_, type_);
+    }
+    public org.syntax.stella.Absyn.Type visit(org.syntax.stella.Absyn.TypeForAll p, A arg)
+    {
+      org.syntax.stella.Absyn.ListStellaIdent liststellaident_ = p.liststellaident_;
+      org.syntax.stella.Absyn.Type type_ = p.type_.accept(this, arg);
+      return new org.syntax.stella.Absyn.TypeForAll(liststellaident_, type_);
     }
     public org.syntax.stella.Absyn.Type visit(org.syntax.stella.Absyn.TypeRec p, A arg)
     {
@@ -395,6 +425,12 @@ public class ComposVisitor<A> implements
       org.syntax.stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
       return new org.syntax.stella.Absyn.LetRec(listpatternbinding_, expr_);
     }
+    public org.syntax.stella.Absyn.Expr visit(org.syntax.stella.Absyn.TypeAbstraction p, A arg)
+    {
+      org.syntax.stella.Absyn.ListStellaIdent liststellaident_ = p.liststellaident_;
+      org.syntax.stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      return new org.syntax.stella.Absyn.TypeAbstraction(liststellaident_, expr_);
+    }
     public org.syntax.stella.Absyn.Expr visit(org.syntax.stella.Absyn.Assign p, A arg)
     {
       org.syntax.stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
@@ -546,6 +582,16 @@ public class ComposVisitor<A> implements
         listexpr_.add(x.accept(this,arg));
       }
       return new org.syntax.stella.Absyn.Application(expr_, listexpr_);
+    }
+    public org.syntax.stella.Absyn.Expr visit(org.syntax.stella.Absyn.TypeApplication p, A arg)
+    {
+      org.syntax.stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      org.syntax.stella.Absyn.ListType listtype_ = new org.syntax.stella.Absyn.ListType();
+      for (org.syntax.stella.Absyn.Type x : p.listtype_)
+      {
+        listtype_.add(x.accept(this,arg));
+      }
+      return new org.syntax.stella.Absyn.TypeApplication(expr_, listtype_);
     }
     public org.syntax.stella.Absyn.Expr visit(org.syntax.stella.Absyn.DotRecord p, A arg)
     {

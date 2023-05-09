@@ -54,6 +54,25 @@ public abstract class FoldVisitor<R,A> implements AllVisitor<R,A> {
       r = combine(p.expr_.accept(this, arg), r, arg);
       return r;
     }
+    public R visit(org.syntax.stella.Absyn.DeclFunGeneric p, A arg) {
+      R r = leaf(arg);
+      for (org.syntax.stella.Absyn.Annotation x : p.listannotation_)
+      {
+        r = combine(x.accept(this, arg), r, arg);
+      }
+      for (org.syntax.stella.Absyn.ParamDecl x : p.listparamdecl_)
+      {
+        r = combine(x.accept(this, arg), r, arg);
+      }
+      r = combine(p.returntype_.accept(this, arg), r, arg);
+      r = combine(p.throwtype_.accept(this, arg), r, arg);
+      for (org.syntax.stella.Absyn.Decl x : p.listdecl_)
+      {
+        r = combine(x.accept(this, arg), r, arg);
+      }
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      return r;
+    }
     public R visit(org.syntax.stella.Absyn.DeclTypeAlias p, A arg) {
       R r = leaf(arg);
       r = combine(p.type_.accept(this, arg), r, arg);
@@ -122,6 +141,11 @@ public abstract class FoldVisitor<R,A> implements AllVisitor<R,A> {
       {
         r = combine(x.accept(this, arg), r, arg);
       }
+      r = combine(p.type_.accept(this, arg), r, arg);
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.TypeForAll p, A arg) {
+      R r = leaf(arg);
       r = combine(p.type_.accept(this, arg), r, arg);
       return r;
     }
@@ -347,6 +371,11 @@ public abstract class FoldVisitor<R,A> implements AllVisitor<R,A> {
       r = combine(p.expr_.accept(this, arg), r, arg);
       return r;
     }
+    public R visit(org.syntax.stella.Absyn.TypeAbstraction p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      return r;
+    }
     public R visit(org.syntax.stella.Absyn.Assign p, A arg) {
       R r = leaf(arg);
       r = combine(p.expr_1.accept(this, arg), r, arg);
@@ -489,6 +518,15 @@ public abstract class FoldVisitor<R,A> implements AllVisitor<R,A> {
       R r = leaf(arg);
       r = combine(p.expr_.accept(this, arg), r, arg);
       for (org.syntax.stella.Absyn.Expr x : p.listexpr_)
+      {
+        r = combine(x.accept(this, arg), r, arg);
+      }
+      return r;
+    }
+    public R visit(org.syntax.stella.Absyn.TypeApplication p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      for (org.syntax.stella.Absyn.Type x : p.listtype_)
       {
         r = combine(x.accept(this, arg), r, arg);
       }

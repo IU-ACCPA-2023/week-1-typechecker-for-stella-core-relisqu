@@ -10,6 +10,7 @@ public abstract class Expr implements java.io.Serializable {
     public R visit(org.syntax.stella.Absyn.If p, A arg);
     public R visit(org.syntax.stella.Absyn.Let p, A arg);
     public R visit(org.syntax.stella.Absyn.LetRec p, A arg);
+    public R visit(org.syntax.stella.Absyn.TypeAbstraction p, A arg);
     public R visit(org.syntax.stella.Absyn.LessThan p, A arg);
     public R visit(org.syntax.stella.Absyn.LessThanOrEqual p, A arg);
     public R visit(org.syntax.stella.Absyn.GreaterThan p, A arg);
@@ -31,6 +32,7 @@ public abstract class Expr implements java.io.Serializable {
     public R visit(org.syntax.stella.Absyn.Ref p, A arg);
     public R visit(org.syntax.stella.Absyn.Deref p, A arg);
     public R visit(org.syntax.stella.Absyn.Application p, A arg);
+    public R visit(org.syntax.stella.Absyn.TypeApplication p, A arg);
     public R visit(org.syntax.stella.Absyn.DotRecord p, A arg);
     public R visit(org.syntax.stella.Absyn.DotTuple p, A arg);
     public R visit(org.syntax.stella.Absyn.Tuple p, A arg);

@@ -62,6 +62,26 @@ public class VisitSkel
       p.expr_.accept(new ExprVisitor<R,A>(), arg);
       return null;
     }
+    public R visit(org.syntax.stella.Absyn.DeclFunGeneric p, A arg)
+    { /* Code for DeclFunGeneric goes here */
+      for (org.syntax.stella.Absyn.Annotation x: p.listannotation_) {
+        x.accept(new AnnotationVisitor<R,A>(), arg);
+      }
+      //p.stellaident_;
+      for (String x: p.liststellaident_) {
+        //x;
+      }
+      for (org.syntax.stella.Absyn.ParamDecl x: p.listparamdecl_) {
+        x.accept(new ParamDeclVisitor<R,A>(), arg);
+      }
+      p.returntype_.accept(new ReturnTypeVisitor<R,A>(), arg);
+      p.throwtype_.accept(new ThrowTypeVisitor<R,A>(), arg);
+      for (org.syntax.stella.Absyn.Decl x: p.listdecl_) {
+        x.accept(new DeclVisitor<R,A>(), arg);
+      }
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
     public R visit(org.syntax.stella.Absyn.DeclTypeAlias p, A arg)
     { /* Code for DeclTypeAlias goes here */
       //p.stellaident_;
@@ -136,6 +156,14 @@ public class VisitSkel
     { /* Code for TypeFun goes here */
       for (org.syntax.stella.Absyn.Type x: p.listtype_) {
         x.accept(new TypeVisitor<R,A>(), arg);
+      }
+      p.type_.accept(new TypeVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(org.syntax.stella.Absyn.TypeForAll p, A arg)
+    { /* Code for TypeForAll goes here */
+      for (String x: p.liststellaident_) {
+        //x;
       }
       p.type_.accept(new TypeVisitor<R,A>(), arg);
       return null;
@@ -369,6 +397,14 @@ public class VisitSkel
       p.expr_.accept(new ExprVisitor<R,A>(), arg);
       return null;
     }
+    public R visit(org.syntax.stella.Absyn.TypeAbstraction p, A arg)
+    { /* Code for TypeAbstraction goes here */
+      for (String x: p.liststellaident_) {
+        //x;
+      }
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
     public R visit(org.syntax.stella.Absyn.Assign p, A arg)
     { /* Code for Assign goes here */
       p.expr_1.accept(new ExprVisitor<R,A>(), arg);
@@ -510,6 +546,14 @@ public class VisitSkel
       p.expr_.accept(new ExprVisitor<R,A>(), arg);
       for (org.syntax.stella.Absyn.Expr x: p.listexpr_) {
         x.accept(new ExprVisitor<R,A>(), arg);
+      }
+      return null;
+    }
+    public R visit(org.syntax.stella.Absyn.TypeApplication p, A arg)
+    { /* Code for TypeApplication goes here */
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      for (org.syntax.stella.Absyn.Type x: p.listtype_) {
+        x.accept(new TypeVisitor<R,A>(), arg);
       }
       return null;
     }

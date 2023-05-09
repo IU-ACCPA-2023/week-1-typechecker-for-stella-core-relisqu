@@ -759,6 +759,29 @@ public class PrettyPrinter
        render("}");
        if (_i_ > 0) render(_R_PAREN);
     }
+    else     if (foo instanceof org.syntax.stella.Absyn.DeclFunGeneric)
+    {
+       org.syntax.stella.Absyn.DeclFunGeneric _declfungeneric = (org.syntax.stella.Absyn.DeclFunGeneric) foo;
+       if (_i_ > 0) render(_L_PAREN);
+       pp(_declfungeneric.listannotation_, 0);
+       render("generic");
+       render("fn");
+       pp(_declfungeneric.stellaident_, 0);
+       render("[");
+       pp(_declfungeneric.liststellaident_, 0);
+       render("]");
+       render("(");
+       pp(_declfungeneric.listparamdecl_, 0);
+       render(")");
+       pp(_declfungeneric.returntype_, 0);
+       pp(_declfungeneric.throwtype_, 0);
+       render("{");
+       pp(_declfungeneric.listdecl_, 0);
+       render("return");
+       pp(_declfungeneric.expr_, 0);
+       render("}");
+       if (_i_ > 0) render(_R_PAREN);
+    }
     else     if (foo instanceof org.syntax.stella.Absyn.DeclTypeAlias)
     {
        org.syntax.stella.Absyn.DeclTypeAlias _decltypealias = (org.syntax.stella.Absyn.DeclTypeAlias) foo;
@@ -948,6 +971,16 @@ public class PrettyPrinter
        render(")");
        render("->");
        pp(_typefun.type_, 0);
+       if (_i_ > 0) render(_R_PAREN);
+    }
+    else     if (foo instanceof org.syntax.stella.Absyn.TypeForAll)
+    {
+       org.syntax.stella.Absyn.TypeForAll _typeforall = (org.syntax.stella.Absyn.TypeForAll) foo;
+       if (_i_ > 0) render(_L_PAREN);
+       render("forall");
+       pp(_typeforall.liststellaident_, 0);
+       render(".");
+       pp(_typeforall.type_, 0);
        if (_i_ > 0) render(_R_PAREN);
     }
     else     if (foo instanceof org.syntax.stella.Absyn.TypeRec)
@@ -1424,6 +1457,17 @@ public class PrettyPrinter
        pp(_letrec.expr_, 0);
        if (_i_ > 0) render(_R_PAREN);
     }
+    else     if (foo instanceof org.syntax.stella.Absyn.TypeAbstraction)
+    {
+       org.syntax.stella.Absyn.TypeAbstraction _typeabstraction = (org.syntax.stella.Absyn.TypeAbstraction) foo;
+       if (_i_ > 0) render(_L_PAREN);
+       render("generic");
+       render("[");
+       pp(_typeabstraction.liststellaident_, 0);
+       render("]");
+       pp(_typeabstraction.expr_, 0);
+       if (_i_ > 0) render(_R_PAREN);
+    }
     else     if (foo instanceof org.syntax.stella.Absyn.Assign)
     {
        org.syntax.stella.Absyn.Assign _assign = (org.syntax.stella.Absyn.Assign) foo;
@@ -1642,6 +1686,16 @@ public class PrettyPrinter
        render("(");
        pp(_application.listexpr_, 0);
        render(")");
+       if (_i_ > 6) render(_R_PAREN);
+    }
+    else     if (foo instanceof org.syntax.stella.Absyn.TypeApplication)
+    {
+       org.syntax.stella.Absyn.TypeApplication _typeapplication = (org.syntax.stella.Absyn.TypeApplication) foo;
+       if (_i_ > 6) render(_L_PAREN);
+       pp(_typeapplication.expr_, 6);
+       render("[");
+       pp(_typeapplication.listtype_, 0);
+       render("]");
        if (_i_ > 6) render(_R_PAREN);
     }
     else     if (foo instanceof org.syntax.stella.Absyn.DotRecord)
@@ -2165,6 +2219,29 @@ public class PrettyPrinter
        sh(_declfun.expr_);
        render(")");
     }
+    if (foo instanceof org.syntax.stella.Absyn.DeclFunGeneric)
+    {
+       org.syntax.stella.Absyn.DeclFunGeneric _declfungeneric = (org.syntax.stella.Absyn.DeclFunGeneric) foo;
+       render("(");
+       render("DeclFunGeneric");
+       render("[");
+       sh(_declfungeneric.listannotation_);
+       render("]");
+       sh(_declfungeneric.stellaident_);
+       render("[");
+       sh(_declfungeneric.liststellaident_);
+       render("]");
+       render("[");
+       sh(_declfungeneric.listparamdecl_);
+       render("]");
+       sh(_declfungeneric.returntype_);
+       sh(_declfungeneric.throwtype_);
+       render("[");
+       sh(_declfungeneric.listdecl_);
+       render("]");
+       sh(_declfungeneric.expr_);
+       render(")");
+    }
     if (foo instanceof org.syntax.stella.Absyn.DeclTypeAlias)
     {
        org.syntax.stella.Absyn.DeclTypeAlias _decltypealias = (org.syntax.stella.Absyn.DeclTypeAlias) foo;
@@ -2314,6 +2391,17 @@ public class PrettyPrinter
        sh(_typefun.listtype_);
        render("]");
        sh(_typefun.type_);
+       render(")");
+    }
+    if (foo instanceof org.syntax.stella.Absyn.TypeForAll)
+    {
+       org.syntax.stella.Absyn.TypeForAll _typeforall = (org.syntax.stella.Absyn.TypeForAll) foo;
+       render("(");
+       render("TypeForAll");
+       render("[");
+       sh(_typeforall.liststellaident_);
+       render("]");
+       sh(_typeforall.type_);
        render(")");
     }
     if (foo instanceof org.syntax.stella.Absyn.TypeRec)
@@ -2695,6 +2783,17 @@ public class PrettyPrinter
        sh(_letrec.expr_);
        render(")");
     }
+    if (foo instanceof org.syntax.stella.Absyn.TypeAbstraction)
+    {
+       org.syntax.stella.Absyn.TypeAbstraction _typeabstraction = (org.syntax.stella.Absyn.TypeAbstraction) foo;
+       render("(");
+       render("TypeAbstraction");
+       render("[");
+       sh(_typeabstraction.liststellaident_);
+       render("]");
+       sh(_typeabstraction.expr_);
+       render(")");
+    }
     if (foo instanceof org.syntax.stella.Absyn.Assign)
     {
        org.syntax.stella.Absyn.Assign _assign = (org.syntax.stella.Absyn.Assign) foo;
@@ -2905,6 +3004,17 @@ public class PrettyPrinter
        sh(_application.expr_);
        render("[");
        sh(_application.listexpr_);
+       render("]");
+       render(")");
+    }
+    if (foo instanceof org.syntax.stella.Absyn.TypeApplication)
+    {
+       org.syntax.stella.Absyn.TypeApplication _typeapplication = (org.syntax.stella.Absyn.TypeApplication) foo;
+       render("(");
+       render("TypeApplication");
+       sh(_typeapplication.expr_);
+       render("[");
+       sh(_typeapplication.listtype_);
        render("]");
        render(")");
     }
